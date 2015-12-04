@@ -1,2 +1,1 @@
-# web
-cloudenergy web public
+public web source for [cloudenergy.me](http://cloudenergy.me)
