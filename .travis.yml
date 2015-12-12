@@ -1,7 +1,7 @@
 language: node_js
 branches:
   only: master
-node_js: '0.10'
+node_js: '4.1'
 sudo: false
 before_install:
 - openssl aes-256-cbc -K $encrypted_7adcd9f8e90f_key -iv $encrypted_7adcd9f8e90f_iv
