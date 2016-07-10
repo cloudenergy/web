@@ -1,0 +1,104 @@
+@charset "UTF-8";
+/*  project模板样式 - 首页  */
+.app-view-project-main {
+  /* datetimepicker */
+  /* datetimepicker */ }
+  .app-view-project-main .subContent {
+    min-height: 320px; }
+  .app-view-project-main .content-right {
+    padding-left: 0; }
+  .app-view-project-main .unitAreaTitle {
+    color: #bbb;
+    font-size: 10px; }
+  .app-view-project-main .unitAreaCounting {
+    line-height: 1;
+    padding-top: 3px;
+    font-size: 26px; }
+  .app-view-project-main .unitAreaUnit {
+    font-size: 12px; }
+  .app-view-project-main .highcharts-panel {
+    height: 220px; }
+  .app-view-project-main .highcharts-line {
+    height: 320px; }
+  .app-view-project-main .rate-content {
+    margin-bottom: 15px;
+    background-color: #FFF; }
+    .app-view-project-main .rate-content .content-right .panel-body {
+      border-left: 1px solid #E9E9E9; }
+    .app-view-project-main .rate-content .subContent .highcharts-panel {
+      height: 320px; }
+  .app-view-project-main .datetimepicker-panel > i {
+    display: block;
+    width: 0;
+    height: 0;
+    line-height: 0;
+    margin: auto;
+    border: 28px solid transparent;
+    border-top-width: 0;
+    border-bottom: 14px solid #F5F5F5;
+    font-size: 0;
+    overflow: hidden; }
+  .app-view-project-main .bootstrap-datetimepicker-widget {
+    position: static;
+    background: #F5F5F5;
+    box-shadow: none; }
+    .app-view-project-main .bootstrap-datetimepicker-widget .datepicker-days {
+      padding: 5px; }
+    .app-view-project-main .bootstrap-datetimepicker-widget table th.picker-switch {
+      width: auto; }
+    .app-view-project-main .bootstrap-datetimepicker-widget table td.day {
+      border-radius: 50%; }
+    .app-view-project-main .bootstrap-datetimepicker-widget table td.active {
+      position: relative; }
+    .app-view-project-main .bootstrap-datetimepicker-widget table td.active:after {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      content: ''; }
+  .app-view-project-main .datetimepicker-component {
+    position: relative;
+    max-width: 220px;
+    margin: 15px auto 0 auto; }
+    .app-view-project-main .datetimepicker-component .emstatus-up, .app-view-project-main .datetimepicker-component .emstatus-up.day,
+    .app-view-project-main .datetimepicker-component .emstatus-up:hover,
+    .app-view-project-main .datetimepicker-component .emstatus-up:hover.day {
+      background-color: #FDAA74;
+      color: #FFF; }
+    .app-view-project-main .datetimepicker-component .emstatus-up.today:before,
+    .app-view-project-main .datetimepicker-component .emstatus-up:hover.today:before {
+      border-bottom-color: #FFF; }
+    .app-view-project-main .datetimepicker-component .emstatus-down, .app-view-project-main .datetimepicker-component .emstatus-down.day,
+    .app-view-project-main .datetimepicker-component .emstatus-down:hover,
+    .app-view-project-main .datetimepicker-component .emstatus-down:hover.day {
+      background-color: #14BBC1;
+      color: #FFF; }
+    .app-view-project-main .datetimepicker-component .emstatus-down.today:before,
+    .app-view-project-main .datetimepicker-component .emstatus-down:hover.today:before {
+      border-bottom-color: #FFF; }
+    .app-view-project-main .datetimepicker-component .emstatus-keep, .app-view-project-main .datetimepicker-component .emstatus-keep.day,
+    .app-view-project-main .datetimepicker-component .emstatus-keep:hover,
+    .app-view-project-main .datetimepicker-component .emstatus-keep:hover.day {
+      background-color: #67ADE0;
+      color: #FFF; }
+    .app-view-project-main .datetimepicker-component .emstatus-keep.today:before,
+    .app-view-project-main .datetimepicker-component .emstatus-keep:hover.today:before {
+      border-bottom-color: #FFF; }
+    .app-view-project-main .datetimepicker-component .emstatus-up.active:after,
+    .app-view-project-main .datetimepicker-component .emstatus-down.active:after,
+    .app-view-project-main .datetimepicker-component .emstatus-keep.active:after {
+      border: 3px solid #337ab7; }
+  .app-view-project-main .datetimepicker-comment {
+    line-height: 12px;
+    padding-top: 13px;
+    padding-bottom: 15px;
+    font-size: 12px;
+    color: #999; }
+    .app-view-project-main .datetimepicker-comment i {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      vertical-align: middle; }

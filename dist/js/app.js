@@ -1,1 +1,0 @@
-window.EMAPP=angular.module("EMAPP",["ngCookies","ngResource","ui.router","oc.lazyLoad"]).run(["$templateCache",function(e){EMAPP.templateCache=e}]),angular.element(document).ready(function(){angular.element(document.body).html('<div preloader class="preloader" ng-show="preloader"></div><div ui-view></div>'),angular.bootstrap(document,["EMAPP"])});
