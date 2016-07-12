@@ -1,61 +1,12 @@
-EMAPP.templateCache.put('assets/html/project/statistic.html?rev=24d7cb99f0', '<div class="app-view-project-statistic"><ul class="nav nav-tabs ng-cloak"><li ng-repeat="(key,name) in self.tabs" ng-class="{active:self.tabActive===key}"><a ui-sref="{tab:key}" ng-bind="name"></a></li><li class="pull-right form-inline"><div class="form-group form-group-sm has-feedback date"><input type="text" class="form-control" id="start_date" ng-model="self.startDate" datetimepicker data-link-right="#end_date"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-show="self.tabActive!==\'dailyreport\'">至</div><div class="form-group form-group-sm has-feedback date" ng-show="self.tabActive!==\'dailyreport\'"><input type="text" class="form-control" id="end_date" ng-model="self.endDate" datetimepicker data-use-current="false" data-link-left="#start_date"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-if="!self.groupmode"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="self.energyData.selected.title||\'全部\'">全部</span> <span class="caret"></span></button><ul class="dropdown-menu"><li ng-class="{active:!self.energyData.selected}" ng-click="self.energyData.selected=null;"><a href="javascript:void(0)">全部</a></li><li ng-repeat="item in self.energyData" ng-class="{active:self.energyData.selected.id===item.id}" ng-click="self.energyData.selected=item;"><a href="javascript:void(0)" ng-bind="item.title"></a></li></ul></div></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-success" ng-click="self.report(self.tabActive);"><i class="emweb web-search"></i> 查询</button></div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group btn-group-sm ng-hide" ng-show="self.tabActive===\'monthlyreport\'||self.tabActive===\'dailyreport\'"><a class="btn btn-info" href="javascript:void(0)" ng-class="{active:self.grid_timetype_current===\'usage\'}" ng-click="self.grid_timetype(\'usage\')">用量 <i class="emweb web-curve-area"></i> </a><a class="btn btn-info" href="javascript:void(0)" ng-class="{active:self.grid_timetype_current===\'scale\'}" ng-click="self.grid_timetype(\'scale\')">刻度 <i class="emweb web-line-spacing"></i></a></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.filter()">筛选<i class="emweb web-filter"></i></button></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.export()">导出<i class="emweb web-export-excel"></i></button></div></li></ul><div class="tab-content ng-cloak"><div class="tab-pane subContent active" auto-height ui-i18n="\'zh-cn\'" id="report"><div ui-grid="self.gridOptions" class="grid" ui-grid-auto-resize ui-grid-exporter ui-grid-move-columns ui-grid-resize-columns></div></div></div></div>');
+EMAPP.templateCache.put('assets/html/project/statistic.html?rev=f406556ea4', '<div class="app-view-project-statistic"><ul class="nav nav-tabs ng-cloak"><li ng-repeat="(key,name) in self.tabs" ng-class="{active:self.tabActive===key}"><a ui-sref="{tab:key}" ng-bind="name"></a></li><li class="pull-right form-inline"><div class="form-group form-group-sm has-feedback date"><input type="text" class="form-control" id="start_date" ng-model="self.startDate" datetimepicker range-day="self.rangeDay" data-link-right="#end_date"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-show="self.tabActive!==\'dailyreport\'">至</div><div class="form-group form-group-sm has-feedback date" ng-show="self.tabActive!==\'dailyreport\'"><input type="text" class="form-control" id="end_date" ng-model="self.endDate" datetimepicker range-day="self.rangeDay" data-use-current="false" data-link-left="#start_date"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-if="!self.groupmode"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="self.energyData.selected.title||\'全部\'">全部</span> <span class="caret"></span></button><ul class="dropdown-menu"><li ng-class="{active:!self.energyData.selected}" ng-click="self.energyData.selected=null;"><a href="javascript:void(0)">全部</a></li><li ng-repeat="item in self.energyData" ng-class="{active:self.energyData.selected.id===item.id}" ng-click="self.energyData.selected=item;"><a href="javascript:void(0)" ng-bind="item.title"></a></li></ul></div></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-success" ng-click="self.report(self.tabActive);"><i class="emweb web-search"></i> 查询</button></div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group btn-group-sm ng-hide" ng-show="self.tabActive===\'monthlyreport\'||self.tabActive===\'dailyreport\'"><a class="btn btn-info" href="javascript:void(0)" ng-class="{active:self.grid_timetype_current===\'usage\'}" ng-click="self.grid_timetype(\'usage\')">用量 <i class="emweb web-curve-area"></i> </a><a class="btn btn-info" href="javascript:void(0)" ng-class="{active:self.grid_timetype_current===\'scale\'}" ng-click="self.grid_timetype(\'scale\')">刻度 <i class="emweb web-line-spacing"></i></a></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.filter()">筛选<i class="emweb web-filter"></i></button></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.export()">导出<i class="emweb web-export-excel"></i></button></div></li></ul><div class="tab-content ng-cloak"><div class="tab-pane subContent active" auto-height ui-i18n="\'zh-cn\'" id="report"><div ui-grid="self.gridOptions" class="grid" ui-grid-auto-resize ui-grid-exporter ui-grid-move-columns ui-grid-resize-columns></div></div></div></div>');
 
 angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$timeout", "$stateParams", "uiGridConstants", function($api, $filter, $timeout, $stateParams, uiGridConstants) {
 
     var self = this,
         nowDate = new Date(),
-        projectId = EMAPP.Project.current && EMAPP.Project.current._id,
-        startDate = $('#start_date'),
-        endDate = $('#end_date'); //,
-    // changeDate = function(e) {
-    //     if (e.date && e.oldDate) {
-    //         var oldDate = e.oldDate.format('YYYYMMDD'),
-    //             newDate = e.date.format('YYYYMMDD');
-    //         newDate !== oldDate && self.report(self.tabActive);
-    //     }
-    // };
+        projectId = EMAPP.Project.current && EMAPP.Project.current._id;
 
     self.groupmode = EMAPP.User.groupmode;
-
-    startDate.bind('dp.change', function(e) {
-        e.date && $timeout(function() {
-
-            //处理月报表31天选择范围
-            if (self.tabActive === 'monthlyreport') {
-                var max = new Date(Math.min(angular.copy(e.date._d).setDate(e.date.date() + 31), nowDate.valueOf())),
-                    val = new Date(self.endDate.replace(/\-/g, '/'));
-                if (max < val) {
-                    endDate.data('DateTimePicker').clear();
-                    startDate.data('DateTimePicker').maxDate(max);
-                    self.endDate = $filter('date')(max, 'yyyy-MM-dd');
-                }
-            }
-
-            //刷新数据
-            // changeDate(e);
-
-        })
-    });
-
-    endDate.bind('dp.change', function(e) {
-        e.date && $timeout(function() {
-
-            //处理月报表31天选择范围
-            if (self.tabActive === 'monthlyreport') {
-                var min = new Date(angular.copy(e.date._d).setDate(e.date.date() - 31)),
-                    val = new Date(self.startDate.replace(/\-/g, '/'));
-                if (min > val) {
-                    startDate.data('DateTimePicker').clear();
-                    endDate.data('DateTimePicker').minDate(min);
-                    self.startDate = $filter('date')(min, 'yyyy-MM-dd');
-                }
-            }
-
-            //刷新数据
-            // changeDate(e);
-
-        })
-    });
 
     !self.groupmode && $api.energy.info({
         project: EMAPP.Project.ids
@@ -147,6 +98,8 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
 
         self.startDate = $filter('date')(nowDate, tabKey === 'dailyreport' ? 'yyyy-MM-dd' : 'yyyy-MM-01');
         self.endDate = $filter('date')(nowDate, 'yyyy-MM-dd');
+
+        self.rangeDay = tabKey === 'monthlyreport' && 30 || 0;
 
         self.tabActive = tabKey;
 
