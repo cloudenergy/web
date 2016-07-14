@@ -8,7 +8,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
     /*  ui-router setup  */
     $stateProvider.state('auth', {
         url: '/dashboard/auth/:action',
-        templateUrl: 'assets/html/login.html?rev=e7a159f548',
+        templateUrl: 'assets/html/login.html?rev=8dd99178c6',
         controller: 'EMAPP.login',
         controllerAs: 'self',
         data: {
@@ -18,7 +18,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'https://static.cloudenergy.me/libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=000f10d11a',
+                    'assets/js/controllers/login.min.js?rev=c7bc6df3ca',
                     'assets/js/app.error.min.js?rev=a582bc0375'
                 ])
             }]
@@ -98,7 +98,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/control',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/control.html?rev=2d6d1629a3',
+                templateUrl: 'assets/html/project/control.html?rev=736a97f69c',
                 controller: 'project.control',
                 controllerAs: 'self'
             }
@@ -111,7 +111,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=808070724c',
                     'https://static.cloudenergy.me/libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=aa566dc711',
+                    'assets/js/controllers/project/control.min.js?rev=f1c764dd3a',
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'

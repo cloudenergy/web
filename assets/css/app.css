@@ -68,14 +68,20 @@ body {
   bottom: 0;
   background: #FFF url(/assets/img/signin.jpg?rev=3e50fbf5fb) repeat-y fixed center center/cover; }
 
+.login-position {
+  position: absolute;
+  top: 50%;
+  left: 50%; }
+
 .login-form {
+  float: left;
   width: 360px;
-  margin: 300px auto 0 auto;
-  padding: 24px 23px 20px;
+  margin-top: -70%;
+  margin-left: -50%;
   background-color: #edeff1;
   border-radius: 6px; }
-  .login-form h4 {
-    margin-top: 0; }
+  .login-form img {
+    max-width: 100%; }
   .login-form .form-control + .emweb {
     font-size: 24px; }
   .login-form .form-control:focus,

@@ -1,4 +1,4 @@
-EMAPP.templateCache.put('assets/html/login.html?rev=e7a159f548', '<div class="login-container"><form class="login-form text-center" ng-submit="self.login()" novalidate><h4>古鸽云能源用户平台</h4><div class="form-group has-feedback"><input type="text" class="form-control login-field" ng-model="self.user" maxlength="50" placeholder="用户名"> <i class="form-control-feedback emweb web-card"></i></div><div class="form-group has-feedback"><input type="password" class="form-control login-field" ng-model="self.passwd" maxlength="18" placeholder="密码"> <i class="form-control-feedback emweb web-key"></i></div><div class="form-group"><button type="submit" class="btn btn-primary btn-block">登录 <i class="emweb web-login"></i></button></div></form></div>');
+EMAPP.templateCache.put('assets/html/login.html?rev=8dd99178c6', '<div class="login-container"><div class="login-position text-center"><form class="login-form" ng-submit="self.login()" novalidate><div class="form-group"><img ng-src="assets/img/logo.png" title="智慧云能源用户平台" ng-if="!self.isBasic"> <img src="assets/img/logo_basic.png" title="柏诚智能云能源用户平台" ng-if="self.isBasic"></div><div class="form-group has-feedback"><input type="text" class="form-control login-field" ng-model="self.user" maxlength="50" placeholder="用户名"> <i class="form-control-feedback emweb web-card"></i></div><div class="form-group has-feedback"><input type="password" class="form-control login-field" ng-model="self.passwd" maxlength="18" placeholder="密码"> <i class="form-control-feedback emweb web-key"></i></div><div class="form-group"><button type="submit" class="btn btn-primary btn-block">登录 <i class="emweb web-login"></i></button></div></form></div></div>');
 
 angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$api", "$cookies", "md5", "SweetAlert", function($state, $stateParams, $api, $cookies, md5, SweetAlert) {
 
@@ -39,6 +39,8 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
             }
 
         };
+
+    self.isBasic = /^basic\./.test(location.host);
 
     //登录
     self.login = function() {
