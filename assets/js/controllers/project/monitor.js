@@ -170,7 +170,7 @@ angular.module('EMAPP').controller('project.monitor', ["$scope", "$q", "$api", "
             displayName: '设备名称',
             name: 'title',
             width: '*',
-            minWidth: 260,
+            minWidth: 300,
             enableColumnMenu: false,
             enableSorting: false,
             cellTemplate: '<div class="ui-grid-cell-contents"><a href="javascript:void(0)" ng-click="grid.appScope.self.channeldetail(grid.appScope.self.curveModal=row.entity)" ng-bind="COL_FIELD"></a></div>'
@@ -179,13 +179,6 @@ angular.module('EMAPP').controller('project.monitor', ["$scope", "$q", "$api", "
             name: 'channel',
             width: '*',
             minWidth: 150,
-            enableColumnMenu: false,
-            enableSorting: false
-        }, {
-            displayName: '能耗分类',
-            name: 'energycategory',
-            width: '*',
-            minWidth: 120,
             enableColumnMenu: false,
             enableSorting: false
         }, {

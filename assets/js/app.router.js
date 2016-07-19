@@ -91,7 +91,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js?rev=19cd0b7107',
+                    'assets/js/controllers/project/monitor.min.js?rev=7a7128e2c1',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
                     'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
