@@ -18,9 +18,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'https://static.cloudenergy.me/libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=c7bc6df3ca',
+                    'assets/js/controllers/login.min.js?rev=3e34f370d1',
                     'assets/js/app.error.min.js?rev=a582bc0375'
-                ])
+                ]);
             }]
         }
     }).state('dashboard', {
@@ -31,16 +31,22 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([{
-                    // serie: true,
+                    files: ['assets/css/dashboard.min.css?rev=e7afc668f7']
+                }, {
+                    serie: true,
                     files: [
-                        'assets/css/dashboard.min.css?rev=e7afc668f7',
+                        'https://static.cloudenergy.me/libs/moment-2.14.1/min/moment.min.js',
+                        'https://static.cloudenergy.me/libs/moment-2.14.1/locale/zh-cn.js'
+                    ]
+                }, {
+                    files: [
                         'https://static.cloudenergy.me/libs/angular-sanitize-1.5.7/angular-sanitize.min.js',
                         'https://static.cloudenergy.me/libs/flat-ui-2.3.0/dist/js/flat-ui.min.js',
+                        'assets/js/controllers/dashboard.min.js?rev=9907bd9d51',
                         'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
-                        'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e',
-                        'assets/js/controllers/dashboard.min.js?rev=7113e22e3b'
+                        'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                     ]
-                }])
+                }]);
             }]
         }
     }).state('dashboard.main', {
@@ -61,9 +67,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/main.min.css?rev=03987690d7',
                     'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
                     'assets/js/controllers/project/main.min.js?rev=427a2a3075',
-                    'assets/js/directives/datetimepicker.min.js?rev=8e2508f06a',
+                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a'
-                ])
+                ]);
             }]
         }
     }).state('dashboard.monitor', {
@@ -87,11 +93,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
                     'assets/js/controllers/project/monitor.min.js?rev=19cd0b7107',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
-                    'assets/js/directives/datetimepicker.min.js?rev=8e2508f06a',
+                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
-                ])
+                ]);
             }]
         }
     }).state('dashboard.control', {
@@ -115,7 +121,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
-                ])
+                ]);
             }]
         }
     }).state('dashboard.analyze', {
@@ -139,7 +145,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/js/directives/project/analyze.min.js?rev=22a74f73f7',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
                     'assets/js/factorys/project/analyze.min.js?rev=fcbf668590'
-                ])
+                ]);
             }]
         }
     }).state('dashboard.statistic', {
@@ -160,9 +166,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=2f2d6a2949',
-                    'assets/js/directives/datetimepicker.min.js?rev=8e2508f06a'
-                ])
+                    'assets/js/controllers/project/statistic.min.js?rev=f78f4ef53f',
+                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8'
+                ]);
             }]
         }
     }).state('dashboard.financial', {
@@ -181,11 +187,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/financial.min.js?rev=39c098a317',
+                    'assets/js/controllers/project/financial.min.js?rev=8e28d882b9',
                     'assets/js/directives/project/financial.min.js?rev=ccfdc6f425',
-                    'assets/js/directives/datetimepicker.min.js?rev=8e2508f06a',
+                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
                     'assets/js/factorys/uuid.min.js?rev=85528f3b0b'
-                ])
+                ]);
             }]
         }
     });
@@ -201,6 +207,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
 
     //State Change Events
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+
+        if (toParams.projectid && !sessionStorage.projectid) {
+            sessionStorage.projectid = toParams.projectid;
+            delete toParams.projectid;
+        }
 
         if (!EMAPP.User.token) {
             if (toState.name !== 'auth') {

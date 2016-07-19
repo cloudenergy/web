@@ -129,25 +129,8 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
         self.modalForm.modaltitle = title;
     };
 
-    self.gridRowChanged = function() {
-        self.sum = {
-            amount: 0,
-            balance: 0
-        };
-        angular.forEach(self.gridApi.core.getVisibleRows(self.gridApi.grid), function(item) {
-            if (item.entity.status === '支付完成') {
-                self.sum.amount += item.entity.amount;
-                self.sum.balance += item.entity.balance;
-            }
-        });
-        self.sum.amount = Math.round(self.sum.amount * 100) / 100;
-        self.sum.balance = Math.round(self.sum.balance * 100) / 100;
-    };
-
     self.gridOptions = {
         onRegisterApi: function(gridApi) {
-
-            gridApi.core.on.rowsRendered($scope, self.gridRowChanged);
 
             gridApi.infiniteScroll.on.needLoadMoreData($scope, function() {
                 var defer = $q.defer(),
@@ -180,10 +163,13 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
         exporterOlderExcelCompatibility: true,
         exporterHeaderFilter: function(displayName) {
             if (displayName === '充值金额(元)') {
-                return displayName + '(合计：' + self.sum.amount + ')';
+                return displayName + '(合计：' + self.statistic.sumOfAmount + ')';
             }
-            if (displayName === '本次余额(元)') {
-                return displayName + '(合计：' + self.sum.balance + ')';
+            if (displayName === '欠费金额(元)') {
+                return displayName + '(合计：' + self.statistic.sumOfArrears + ')';
+            }
+            if (displayName === '商户余额(元)') {
+                return displayName + '(合计：' + self.statistic.sumOfBalance + ')';
             }
             return displayName;
         },
@@ -218,20 +204,21 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
                 }]
             }, function(data) {
                 data = data.result[EMAPP.Project.current._id] || {};
-                angular.forEach(data.detail.detail, function(item) {
+                angular.forEach(data.detail, function(item) {
                     item.status = self.status[item.status] || item.status;
                     item.timepaid = item.timepaid && $filter('date')(item.timepaid * 1000, 'yyyy年M月dd日 H:mm:ss') || '';
                     item.timecreate = item.timecreate && $filter('date')(item.timecreate * 1000, 'yyyy年M月dd日 H:mm:ss') || '';
                 });
                 if (loadMore) {
-                    self.gridOptions.data = self.gridOptions.data.concat(data.detail.detail || []);
+                    self.gridOptions.data = self.gridOptions.data.concat(data.detail || []);
                 } else {
-                    self.gridOptions.data = data.detail.detail || [];
+                    self.gridOptions.data = data.detail || [];
                     self.gridOptions.data.length && $timeout(function() {
                         self.gridApi.core.scrollTo(self.gridOptions.data[0], self.gridOptions.columnDefs[0]);
                     });
                 }
                 self.gridOptions.paging = data.paging;
+                self.statistic = data.statistic;
                 return data;
             }).$promise;
         },
@@ -262,6 +249,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
                     });
                 }
                 self.gridOptions.paging = data.paging;
+                self.statistic = data.statistic;
                 return data;
             }).$promise;
         },
@@ -340,20 +328,16 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
                     name: 'amount',
                     type: 'number',
                     width: '*',
-                    minWidth: 120,
+                    minWidth: 200,
                     headerCellTemplate: function() {
-                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.sum.amount}}</div></div><div role="button" tabindex="0"');
+                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sumOfAmount}}</div></div><div role="button" tabindex="0"');
                     }
                 }, {
                     displayName: '本次余额(元)',
                     name: 'balance',
                     type: 'number',
                     width: '*',
-                    minWidth: 120,
-                    // enableColumnMenu: false,
-                    headerCellTemplate: function() {
-                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.sum.balance}}</div></div><div role="button" tabindex="0"');
-                    }
+                    minWidth: 120
                 }, {
                     displayName: '充值方式',
                     name: 'channel',
@@ -431,7 +415,10 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
                     type: "number",
                     name: 'amount',
                     width: '*',
-                    minWidth: 120
+                    minWidth: 200,
+                    headerCellTemplate: function() {
+                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sumOfArrears}}</div></div><div role="button" tabindex="0"');
+                    }
                 }, {
                     displayName: '欠费时间',
                     name: 'arrearagetime',
@@ -497,7 +484,10 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=e8d10504dc'
                     type: "number",
                     name: 'amount',
                     width: '*',
-                    minWidth: 120
+                    minWidth: 200,
+                    headerCellTemplate: function() {
+                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sumOfBalance}}</div></div><div role="button" tabindex="0"');
+                    }
                 }, {
                     displayName: '',
                     name: 'nearest',

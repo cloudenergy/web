@@ -4,12 +4,7 @@ angular.module('EMAPP').directive('datetimepicker', ["$timeout", "$ocLazyLoad", 
         insertBefore: '#load_styles_before',
         files: ['https://static.cloudenergy.me/libs/eonasdan-bootstrap-datetimepicker-4.17.37/build/css/bootstrap-datetimepicker.min.css']
     }, {
-        serie: true,
-        files: [
-            'https://static.cloudenergy.me/libs/moment-2.14.1/min/moment.min.js',
-            'https://static.cloudenergy.me/libs/moment-2.14.1/locale/zh-cn.js',
-            'https://static.cloudenergy.me/libs/eonasdan-bootstrap-datetimepicker-4.17.37/build/js/bootstrap-datetimepicker.min.js'
-        ]
+        files: ['https://static.cloudenergy.me/libs/eonasdan-bootstrap-datetimepicker-4.17.37/build/js/bootstrap-datetimepicker.min.js']
     }]);
 
     return {
