@@ -42,7 +42,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     files: [
                         'https://static.cloudenergy.me/libs/angular-sanitize-1.5.7/angular-sanitize.min.js',
                         'https://static.cloudenergy.me/libs/flat-ui-2.3.0/dist/js/flat-ui.min.js',
-                        'assets/js/controllers/dashboard.min.js?rev=9907bd9d51',
+                        'assets/js/controllers/dashboard.min.js?rev=a0f6e609e8',
                         'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                         'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                     ]
@@ -187,8 +187,8 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/financial.min.js?rev=8e28d882b9',
-                    'assets/js/directives/project/financial.min.js?rev=ccfdc6f425',
+                    'assets/js/controllers/project/financial.min.js?rev=359d368852',
+                    'assets/js/directives/project/financial.min.js?rev=1cb3ad2efd',
                     'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
                     'assets/js/factorys/uuid.min.js?rev=85528f3b0b'
                 ]);

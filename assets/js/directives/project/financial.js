@@ -21,7 +21,7 @@ angular.module('EMAPP').directive('financialModal', function() {
 angular.module('EMAPP').directive('financialMain', function() {
     return {
         restrict: 'A',
-        templateUrl: 'assets/html/project/financial/main.html?rev=88c5b0eab3',
+        templateUrl: 'assets/html/project/financial/main.html?rev=66a99744d3',
         controller: 'project.financial',
         controllerAs: 'self'
     }
