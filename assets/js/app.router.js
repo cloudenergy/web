@@ -66,7 +66,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/main.min.css?rev=03987690d7',
                     'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/main.min.js?rev=427a2a3075',
+                    'assets/js/controllers/project/main.min.js?rev=aa2eb44794',
                     'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a'
                 ]);
