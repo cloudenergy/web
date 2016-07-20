@@ -19,8 +19,8 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     $timeout(function(element) {
         element = $('datetimepicker').bind('dp.show', function() {
             $timeout(function() {
-                element.data('DateTimePicker').maxDate(new Date())
-            })
+                element.data('DateTimePicker').maxDate(new Date());
+            });
         }).bind('dp.change', function(event) {
             var sameMonth = angular.equals(event.date.format('YYYYMM'), $filter('date')(self.viewDate, 'yyyyMM')),
                 sameDate = angular.equals(event.date.format('YYYYMMDD'), $filter('date')(self.viewDate, 'yyyyMMdd'));
@@ -37,7 +37,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
             !sameMonth && self.groupmode && self.projectdetail(self.viewDate);
         }).bind('dp.update', function(event) {
             if (angular.equals(event.viewDate.format('YYYYMM'), $filter('date')(self.viewDate, 'yyyyMM'))) {
-                self.bindTD()
+                self.bindTD();
             } else {
                 element.data('DateTimePicker').maxDate(new Date()).defaultDate(event.viewDate.format('YYYYMMDD') > $filter('date')(new Date(), 'yyyyMMdd') ? new Date() : event.viewDate._d);
             }
@@ -62,7 +62,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
             }
         });
         $('datetimepicker .datepicker-days table tbody td.active').click(function() {
-            return false
+            return false;
         });
     };
 
@@ -83,9 +83,9 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
             }
             angular.forEach(self.calendarData.detail, function(item, key) {
                 if (self.groupmode) {
-                    this[$filter('date')(key, 'yyyy-MM-dd')] = item
+                    this[$filter('date')(key, 'yyyy-MM-dd')] = item;
                 } else {
-                    this[$filter('date')(item._id, 'yyyy-MM-dd')] = item.value
+                    this[$filter('date')(item._id, 'yyyy-MM-dd')] = item.value;
                 }
             }, self.calendarData.detail = {});
             self.bindTD();
@@ -137,7 +137,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 }]
             };
 
-        })
+        });
     };
 
     //总能耗
@@ -165,7 +165,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
             } else {
                 data = data.result[EMAPP.Project.current._id] || {};
                 angular.forEach(data.detail, function(val, key) {
-                    this.push([key, val])
+                    this.push([key, val]);
                 }, data.detail = []);
                 series.push({
                     data: data.detail
@@ -211,7 +211,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                     verticalAlign: 'middle',
                     layout: 'vertical',
                     labelFormatter: function() {
-                        return '<div style="text-align:left;">' + (Math.ceil(this.percentage * 10) / 10) + '% ' + this.name + '</div><div style="color:#BBB;text-align:left;">' + this.y + 'KGce</div>';
+                        return '<div style="text-align:left;">' + (Math.round(this.percentage * 10) / 10) + '% ' + this.name + '</div><div style="color:#BBB;text-align:left;">' + this.y + 'KGce</div>';
                     },
                     itemWidth: 100,
                     useHTML: true,
@@ -220,7 +220,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 series: series
             };
 
-        })
+        });
     };
 
     //水电气构成
@@ -272,7 +272,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 series: series
             };
 
-        })
+        });
     };
 
     //能耗细分
@@ -322,12 +322,12 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                     verticalAlign: 'middle',
                     layout: 'vertical',
                     labelFormatter: function() {
-                        var a = (Math.ceil(this.percentage * 10) / 10) + '% ' + this.name,
+                        var a = (Math.round(this.percentage * 10) / 10) + '% ' + this.name,
                             b = (Math.round((this.y || 0) * 100) / 100) + 'kWh';
                         return [
                             '<span class="center-block" title="' + a + '">' + a + '</span>',
                             '<span class="center-block text-muted" title="' + b + '">' + b + '</span>'
-                        ].join('')
+                        ].join('');
                     },
                     itemWidth: 200,
                     x: 140,
@@ -340,7 +340,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 }]
             };
 
-        })
+        });
     };
 
     //能效比曲线
@@ -396,7 +396,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 series: series
             };
 
-        })
+        });
     };
 
     //节能星级
@@ -440,7 +440,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 series: data.series
             };
 
-        })
+        });
     };
 
 }]);
