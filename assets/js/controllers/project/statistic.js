@@ -77,6 +77,15 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
         rowHeight: 34,
         enableColumnResizing: true,
         exporterOlderExcelCompatibility: true,
+        exporterHeaderFilter: function(displayName) {
+            if (displayName === '能耗总值') {
+                return displayName + '(合计：' + self.statistic.sum + ')';
+            }
+            if (displayName === '费用') {
+                return displayName + '(合计：' + self.statistic.cost + ')';
+            }
+            return displayName;
+        },
         exporterFieldCallback: function(grid, row, col, value) {
             return {
                 name: true,
@@ -110,6 +119,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
     self.report = function(tabKey) {
 
         var energy = self.energyData && self.energyData.selected && self.energyData.selected.id,
+            headerCellTemplate = EMAPP.templateCache.get('ui-grid/uiGridHeaderCell'),
             data = {
                 project: []
             };
@@ -179,7 +189,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     name: 'min',
                     type: 'number',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 120,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
@@ -187,7 +197,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     name: 'max',
                     type: 'number',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 120,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
@@ -195,9 +205,12 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     name: 'sum',
                     type: 'number',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 130,
                     headerCellClass: 'text-right',
-                    cellClass: 'text-right'
+                    cellClass: 'text-right',
+                    headerCellTemplate: function() {
+                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sum}}</div></div><div role="button" tabindex="0"');
+                    }
                 }, {
                     displayName: '单价',
                     name: 'price',
@@ -211,9 +224,12 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     name: 'cost',
                     type: 'number',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 130,
                     headerCellClass: 'text-right',
-                    cellClass: 'text-right'
+                    cellClass: 'text-right',
+                    headerCellTemplate: function() {
+                        return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.cost}}</div></div><div role="button" tabindex="0"');
+                    }
                 }];
                 break;
             case 'monthlyreport':
@@ -382,7 +398,9 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
 
             switch (tabKey) {
                 case 'settlereport':
-                    data = data.result[projectId] || [];
+                    data = data.result[projectId] || {};
+                    self.statistic = data.statistic || {};
+                    data = data.detail || [];
                     break;
                 case 'monthlyreport':
                     data = data.result[projectId] || [];

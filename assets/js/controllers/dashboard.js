@@ -1,11 +1,11 @@
 EMAPP.templateCache.put('assets/html/dashboard.html?rev=f648c8840e', '<div class="app-view-dashboard"><nav class="navbar navbar-default"><div class="pull-left" ng-bind="::self.projectName"></div><div class="pull-right"><div class="btn-group"><span><i class="emweb web-clock"></i> <span ng-bind="self.timeStr"></span></span></div><div class="btn-group" ng-if="self.projectData.length && self.groupmode"><a href="javascript:void(0)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">集团项目<span class="caret"></span></a><ul class="dropdown-menu"><li ng-repeat="item in self.projectData"><a target="_blank" ng-href="/dashboard{{item._id}}/main" ng-bind="item.title"></a></li></ul></div><div class="btn-group"><a class="btn btn-primary" target="_blank" href="http://sighttp.qq.com/authd?IDKEY=c7520bcf5154b71353e5f9bbcc742e8f37dab53dc23d63c5"><i class="emweb web-QQ"></i> <small>QQ客服</small></a></div><div class="btn-group"><a class="btn btn-primary" ng-href="{{::self.adminLink}}"><i class="emweb web-user"></i> <span ng-bind="::self.userName"></span></a></div><div class="btn-group"><a class="btn btn-primary" href="/dashboard/auth/logout"><i class="emweb web-exit"></i> <small>退出</small></a></div></div></nav><div class="view-sidebar"><ul class="nav"><li ng-repeat="item in self.menuData" ng-class="{active:self.menuData.active===item.state}"><a ui-sref="{{::item.state}}" title="{{::item.name}}"><i ng-class="::item.icon"></i></a></li></ul></div><div class="view-content" ui-view="dashboard"></div></div>');
 
-angular.module('EMAPP').controller('EMAPP.dashboard', ["$scope", "$state", "$stateParams", "$location", "$timeout", "$filter", "$api", "$q", function($scope, $state, $stateParams, $location, $timeout, $filter, $api, $q) {
+angular.module('EMAPP').controller('EMAPP.dashboard', ["$scope", "$state", "$stateParams", "$location", "$timeout", "$api", "$q", function($scope, $state, $stateParams, $location, $timeout, $api, $q) {
 
     var self = this,
-        projectid = $stateParams.projectid,
+        projectid = sessionStorage.projectid,
         timeout = $timeout(function nowtime() {
-            self.timeStr = $filter('date')(new Date(), 'H:mm:ss');
+            self.timeStr = moment().format('H:mm:ss');
             timeout = $timeout(nowtime, 1000);
         });
 
@@ -16,12 +16,12 @@ angular.module('EMAPP').controller('EMAPP.dashboard', ["$scope", "$state", "$sta
     });
 
     self.userName = EMAPP.User.user;
-    self.adminLink = /cloudenergy\.me/.test(location.hostname) ? 'http://admin.cloudenergy.me' : '/admin';
+    self.adminLink = /cloudenergy\.me/.test(location.hostname) ? location.origin.replace('pre.', 'preadmin.').replace('www.', 'admin.') : '/admin';
 
     $q.all([
 
         //检查权限
-        angular.isUndefined(EMAPP.User.groupuser) && $api.auth.login(function(data) {
+        $api.auth.login(function(data) {
             EMAPP.User = data && data.result || EMAPP.User || {};
         }).$promise,
 
@@ -29,17 +29,19 @@ angular.module('EMAPP').controller('EMAPP.dashboard', ["$scope", "$state", "$sta
         $api.project.info({
             id: projectid || undefined
         }, function(data) {
-            data = data && data.result || [];
-            if (!angular.isArray(data)) {
-                data = [data];
-            }
-            angular.forEach(EMAPP.Project = self.projectData = data, function(item) {
+            data.result = angular.isArray(data.result) && data.result || data.result && [data.result] || [];
+            angular.forEach(EMAPP.Project = self.projectData = data.result, function(item) {
                 this.push(item._id);
                 EMAPP.Project[item._id] = item;
             }, EMAPP.Project.ids = []);
         }).$promise
 
     ]).then(function() {
+
+        if (!EMAPP.Project.length) {
+            delete sessionStorage.projectid;
+            return;
+        }
 
         if (EMAPP.User.groupmode = self.groupmode = EMAPP.User.groupuser && !projectid) {
 
