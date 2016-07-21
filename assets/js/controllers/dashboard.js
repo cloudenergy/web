@@ -16,7 +16,7 @@ angular.module('EMAPP').controller('EMAPP.dashboard', ["$scope", "$state", "$sta
     });
 
     self.userName = EMAPP.User.user;
-    self.adminLink = /cloudenergy\.me/.test(location.hostname) ? location.origin.replace('pre.', 'preadmin.').replace('www.', 'admin.') : '/admin';
+    self.adminLink = /cloudenergy\.me/.test(location.hostname) ? location.origin.replace('pre.', 'preadmin.').replace('www.', 'admin.').replace('basic.', 'admin.') : '/admin';
 
     $q.all([
 

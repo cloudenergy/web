@@ -42,7 +42,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     files: [
                         'https://static.cloudenergy.me/libs/angular-sanitize-1.5.7/angular-sanitize.min.js',
                         'https://static.cloudenergy.me/libs/flat-ui-2.3.0/dist/js/flat-ui.min.js',
-                        'assets/js/controllers/dashboard.min.js?rev=a0f6e609e8',
+                        'assets/js/controllers/dashboard.min.js?rev=9ac15dcaa9',
                         'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                         'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                     ]
