@@ -9,10 +9,6 @@ angular.module('EMAPP').controller('project.control', ["$scope", "$api", "$timeo
     //显示社会属性
     self.showCustomer = parseInt(localStorage.getItem(KEY_SHOWCUSTOMER) || 1);
     self.customerChange = function(event, state) {
-        angular.extend(self.paging, {
-            index: 1,
-            total: 0
-        });
         self.showCustomer = state && 1 || 0;
         self.list();
         localStorage.setItem(KEY_SHOWCUSTOMER, self.showCustomer);
@@ -26,10 +22,6 @@ angular.module('EMAPP').controller('project.control', ["$scope", "$api", "$timeo
         self.deviceType = data.result;
 
         self.deviceType.length && (self.deviceType.select = function(item) {
-            angular.extend(self.paging, {
-                index: 1,
-                total: 0
-            });
             self.deviceType.selected = item;
             self.list();
         })(self.deviceType[0]);
@@ -100,6 +92,11 @@ angular.module('EMAPP').controller('project.control', ["$scope", "$api", "$timeo
     self.list = function(loadMore) {
 
         if (self.deviceType.selected && !self.monitorData.loading) {
+
+            !loadMore && angular.extend(self.paging, {
+                index: 1,
+                total: 0
+            });
 
             self.monitorData.loading = true;
 

@@ -17,20 +17,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         },
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
-                return $ocLazyLoad.load([{
-                    serie: true,
-                    files: [
-                        static + 'libs/moment-2.14.1/min/moment.min.js',
-                        static + 'libs/moment-2.14.1/locale/zh-cn.js'
-                    ]
-                }, {
-                    files: [
-                        static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                        static + 'libs/flat-ui-2.3.0/dist/js/flat-ui.min.js',
-                        'assets/js/controllers/login.min.js',
-                        'assets/js/app.error.min.js'
-                    ]
-                }]);
+                return $ocLazyLoad.load([
+                    static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
+                    'assets/js/controllers/login.min.js',
+                    'assets/js/app.error.min.js'
+                ]);
             }]
         }
     }).state('dashboard', {
@@ -40,23 +31,13 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         controllerAs: 'self',
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
-                return $ocLazyLoad.load([{
-                    files: ['assets/css/dashboard.min.css']
-                }, {
-                    serie: true,
-                    files: [
-                        static + 'libs/moment-2.14.1/min/moment.min.js',
-                        static + 'libs/moment-2.14.1/locale/zh-cn.js'
-                    ]
-                }, {
-                    files: [
-                        static + 'libs/angular-sanitize-1.5.7/angular-sanitize.min.js',
-                        static + 'libs/flat-ui-2.3.0/dist/js/flat-ui.min.js',
-                        'assets/js/controllers/dashboard.min.js',
-                        'assets/js/directives/auto-height.min.js',
-                        'assets/js/directives/perfect-scrollbar.min.js'
-                    ]
-                }]);
+                return $ocLazyLoad.load([
+                    'assets/css/dashboard.min.css',
+                    static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
+                    'assets/js/controllers/dashboard.min.js',
+                    'assets/js/directives/auto-height.min.js',
+                    'assets/js/directives/perfect-scrollbar.min.js'
+                ]);
             }]
         }
     }).state('dashboard.main', {
@@ -86,7 +67,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/monitor',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/monitor.html?rev=ecb113fe32',
+                templateUrl: 'assets/html/project/monitor.html?rev=1536699ad7',
                 controller: 'project.monitor',
                 controllerAs: 'self'
             }
@@ -162,7 +143,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/statistic/:tab',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/statistic.html?rev=f406556ea4',
+                templateUrl: 'assets/html/project/statistic.html?rev=74ee267abe',
                 controller: 'project.statistic',
                 controllerAs: 'self'
             }

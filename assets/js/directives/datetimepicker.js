@@ -1,4 +1,4 @@
-angular.module('EMAPP').directive('datetimepicker', ["$timeout", "$ocLazyLoad", function($timeout, $ocLazyLoad) {
+angular.module('EMAPP').directive('datetimepicker', ["$ocLazyLoad", function($ocLazyLoad) {
 
     var pluginLoad = $ocLazyLoad.load([{
         insertBefore: '#load_styles_before',
@@ -13,14 +13,45 @@ angular.module('EMAPP').directive('datetimepicker', ["$timeout", "$ocLazyLoad", 
         link: function(scope, element, attrs, ctrl) {
             pluginLoad.then(function() {
 
-                var linkLeft,
-                    linkRight,
+                var elmData,
+                    opt = {
+                        maxDateTo: undefined, //最大至
+                        minDateTo: undefined, //最小至
+                        maxRangeTo: undefined, //最大范围至
+                        minRangeTo: undefined, //最小范围至
+                        rangeDay: undefined //限制范围（天）
+                    },
                     options = {
                         locale: 'zh-CN',
                         format: 'YYYY-MM-DD',
                         maxDate: new Date(),
                         widgetPositioning: {
                             horizontal: 'right'
+                        }
+                    },
+                    linkage = function(nowDate) {
+                        if (!opt.completed) {
+                            elmData = element.data('DateTimePicker');
+                            opt.maxDateTo = opt.maxDateTo && $(opt.maxDateTo).data('DateTimePicker');
+                            opt.minDateTo = opt.minDateTo && $(opt.minDateTo).data('DateTimePicker');
+                            opt.maxRangeTo = opt.maxRangeTo && $(opt.maxRangeTo).data('DateTimePicker');
+                            opt.minRangeTo = opt.minRangeTo && $(opt.minRangeTo).data('DateTimePicker');
+                            opt.completed = true;
+                        }
+                        nowDate = nowDate || elmData.date();
+                        if (opt.maxDateTo) {
+                            opt.maxDateTo.minDate(nowDate);
+                            opt.maxDateTo.date() && elmData.maxDate(opt.maxDateTo.date());
+                        }
+                        if (opt.minDateTo) {
+                            opt.minDateTo.maxDate(nowDate);
+                            opt.minDateTo.date() && elmData.minDate(opt.minDateTo.date());
+                        }
+                        if (opt.maxRangeTo && opt.rangeDay) {
+                            opt.maxRangeTo.date(moment(Math.max(elmData.date(), Math.min(moment(nowDate).add(opt.rangeDay, 'days'), opt.maxRangeTo.date(), moment()))));
+                        }
+                        if (opt.minRangeTo && opt.rangeDay) {
+                            opt.minRangeTo.date(moment(Math.min(elmData.date(), Math.max(moment(nowDate).subtract(opt.rangeDay, 'days'), opt.minRangeTo.date()))));
                         }
                     };
 
@@ -40,46 +71,27 @@ angular.module('EMAPP').directive('datetimepicker', ["$timeout", "$ocLazyLoad", 
 
                         angular.isObject(val) && angular.extend(options, val);
 
-                        linkLeft = options.linkLeft && $(options.linkLeft);
-                        linkRight = options.linkRight && $(options.linkRight);
-
-                        delete options.linkLeft;
-                        delete options.linkRight;
+                        angular.forEach(opt, function(val, key) {
+                            opt[key] = options[key];
+                            delete options[key];
+                        });
 
                         element.datetimepicker(options);
 
-                        !options.inline && $timeout(function() {
-
-                            var linkLeftData = linkLeft && linkLeft.length && linkLeft.data('DateTimePicker'),
-                                linkRightData = linkRight && linkRight.length && linkRight.data('DateTimePicker'),
-                                elementData = element.data('DateTimePicker'),
-                                rangeDate = function(now, rangeDay) {
-                                    if (linkLeftData) {
-                                        linkLeftData.maxDate(now);
-                                        linkLeftData.date() && elementData.minDate(linkLeftData.date());
-                                        rangeDay && linkLeftData.date(moment(Math.max(moment(now).subtract(rangeDay, 'days'), linkLeftData.date())));
-                                    }
-                                    if (linkRightData) {
-                                        linkRightData.minDate(now);
-                                        linkRightData.date() && elementData.maxDate(linkRightData.date());
-                                        rangeDay && linkRightData.date(moment(Math.min(moment(now).add(rangeDay, 'days'), linkRightData.date(), moment())));
-                                    }
-                                };
-
-                            element.off('dp.change').on('dp.change', function(event) {
-                                ctrl && ctrl.$setViewValue(event.target.value);
-                                rangeDate(event.date, attrs.rangeDay && scope.$eval(attrs.rangeDay));
-                            }).off('dp.show').on('dp.show', function(event) {
-                                (element.is('input') ? element.parent() : element).addClass('focus');
-                                rangeDate(elementData.date(), attrs.rangeDay && scope.$eval(attrs.rangeDay));
-                            }).off('dp.hide').on('dp.hide', function() {
-                                (element.is('input') ? element.parent() : element).removeClass('focus');
-                            });
-
+                        !options.inline && element.off('dp.change').on('dp.change', function(event) {
+                            linkage(event.date);
+                            ctrl && ctrl.$setViewValue(event.target.value);
+                        }).off('dp.show').on('dp.show', function() {
+                            linkage();
+                            (element.is('input') ? element.parent() : element).addClass('focus');
+                        }).off('dp.hide').on('dp.hide', function() {
+                            (element.is('input') ? element.parent() : element).removeClass('focus');
                         });
 
                     }
+
                 });
+
             });
         }
     };
