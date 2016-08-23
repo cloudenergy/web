@@ -20,7 +20,7 @@
             return {
                 request: function(request) {
                     if (request.url && /\/api\//i.test(request.url) && request.method) {
-                        delete(request.data || request.params || {})._api_action;
+                        delete (request.data || request.params || {})._api_action;
                         request.url = decodeURIComponent(request.url);
                     }
                     count++;
@@ -39,18 +39,18 @@
             scope: true,
             link: function(scope) {
                 scope.$watch(function() {
-                    return count
+                    return count;
                 }, function(val) {
                     timeout && $timeout.cancel(timeout);
                     if (val === 0) {
                         timeout = $timeout(function() {
-                            scope.preloader = val
+                            scope.preloader = val;
                         }, 10);
                     } else {
-                        scope.preloader = val
+                        scope.preloader = val;
                     }
-                })
+                });
             }
         };
-    }])
+    }]);
 }(0));

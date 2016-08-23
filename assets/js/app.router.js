@@ -5,10 +5,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
     $urlRouterProvider.otherwise(function($injector, $location) {
         $location.url(EMAPP.User.token ? '/dashboard' : '/dashboard/auth/login').replace();
     });
+    var static = 'https://static.cloudenergy.me/';
     /*  ui-router setup  */
     $stateProvider.state('auth', {
         url: '/dashboard/auth/:action',
-        templateUrl: 'assets/html/login.html?rev=8dd99178c6',
+        templateUrl: 'assets/html/login.html?rev=f86da396e5',
         controller: 'EMAPP.login',
         controllerAs: 'self',
         data: {
@@ -17,9 +18,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'https://static.cloudenergy.me/libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=3e34f370d1',
-                    'assets/js/app.error.min.js?rev=a582bc0375'
+                    static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
+                    'assets/js/controllers/login.min.js',
+                    'assets/js/app.error.min.js'
                 ]);
             }]
         }
@@ -30,23 +31,13 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         controllerAs: 'self',
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
-                return $ocLazyLoad.load([{
-                    files: ['assets/css/dashboard.min.css?rev=e7afc668f7']
-                }, {
-                    serie: true,
-                    files: [
-                        'https://static.cloudenergy.me/libs/moment-2.14.1/min/moment.min.js',
-                        'https://static.cloudenergy.me/libs/moment-2.14.1/locale/zh-cn.js'
-                    ]
-                }, {
-                    files: [
-                        'https://static.cloudenergy.me/libs/angular-sanitize-1.5.7/angular-sanitize.min.js',
-                        'https://static.cloudenergy.me/libs/flat-ui-2.3.0/dist/js/flat-ui.min.js',
-                        'assets/js/controllers/dashboard.min.js?rev=9ac15dcaa9',
-                        'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
-                        'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
-                    ]
-                }]);
+                return $ocLazyLoad.load([
+                    'assets/css/dashboard.min.css',
+                    static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
+                    'assets/js/controllers/dashboard.min.js',
+                    'assets/js/directives/auto-height.min.js',
+                    'assets/js/directives/perfect-scrollbar.min.js'
+                ]);
             }]
         }
     }).state('dashboard.main', {
@@ -64,11 +55,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/main.min.css?rev=03987690d7',
-                    'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/main.min.js?rev=aa2eb44794',
-                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
-                    'assets/js/directives/highcharts.min.js?rev=b80f880c1a'
+                    'assets/css/project/main.min.css',
+                    static + 'libs/highcharts-4.2.5/highcharts.js',
+                    'assets/js/controllers/project/main.min.js',
+                    'assets/js/directives/datetimepicker.min.js',
+                    'assets/js/directives/highcharts.min.js'
                 ]);
             }]
         }
@@ -76,7 +67,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/monitor',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/monitor.html?rev=2678b88f6d',
+                templateUrl: 'assets/html/project/monitor.html?rev=1536699ad7',
                 controller: 'project.monitor',
                 controllerAs: 'self'
             }
@@ -87,16 +78,16 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/monitor.min.css?rev=30c90b49da',
-                    'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
-                    'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js?rev=7a7128e2c1',
-                    'assets/js/directives/project/monitor.min.js?rev=672ec59014',
-                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
-                    'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
-                    'assets/js/directives/jstree.min.js?rev=47846372b7',
-                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
+                    'assets/css/project/monitor.min.css',
+                    static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
+                    static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
+                    static + 'libs/highcharts-4.2.5/highcharts.js',
+                    'assets/js/controllers/project/monitor.min.js',
+                    'assets/js/directives/project/monitor.min.js',
+                    'assets/js/directives/datetimepicker.min.js',
+                    'assets/js/directives/highcharts.min.js',
+                    'assets/js/directives/jstree.min.js',
+                    'assets/js/directives/flatui-switch.min.js'
                 ]);
             }]
         }
@@ -104,7 +95,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/control',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/control.html?rev=736a97f69c',
+                templateUrl: 'assets/html/project/control.html?rev=4a3b03534b',
                 controller: 'project.control',
                 controllerAs: 'self'
             }
@@ -115,12 +106,12 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/control.min.css?rev=808070724c',
-                    'https://static.cloudenergy.me/libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=f1c764dd3a',
-                    'assets/js/directives/project/control.min.js?rev=5484d64530',
-                    'assets/js/directives/jstree.min.js?rev=47846372b7',
-                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
+                    'assets/css/project/control.min.css',
+                    static + 'libs/jshashes-1.0.5/hashes.min.js',
+                    'assets/js/controllers/project/control.min.js',
+                    'assets/js/directives/project/control.min.js',
+                    'assets/js/directives/jstree.min.js',
+                    'assets/js/directives/flatui-switch.min.js'
                 ]);
             }]
         }
@@ -139,12 +130,12 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/analyze.min.css?rev=84d5ca7ea3',
-                    'https://static.cloudenergy.me/libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/analyze.min.js?rev=945ecbbc5c',
-                    'assets/js/directives/project/analyze.min.js?rev=22a74f73f7',
-                    'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
-                    'assets/js/factorys/project/analyze.min.js?rev=fcbf668590'
+                    'assets/css/project/analyze.min.css',
+                    static + 'libs/highcharts-4.2.5/highcharts.js',
+                    'assets/js/controllers/project/analyze.min.js',
+                    'assets/js/directives/project/analyze.min.js',
+                    'assets/js/directives/highcharts.min.js',
+                    'assets/js/factorys/project/analyze.min.js'
                 ]);
             }]
         }
@@ -152,7 +143,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/statistic/:tab',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/statistic.html?rev=f406556ea4',
+                templateUrl: 'assets/html/project/statistic.html?rev=74ee267abe',
                 controller: 'project.statistic',
                 controllerAs: 'self'
             }
@@ -163,11 +154,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/statistic.min.css?rev=8f0bb83eec',
-                    'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
-                    'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=f78f4ef53f',
-                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8'
+                    'assets/css/project/statistic.min.css',
+                    static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
+                    static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
+                    'assets/js/controllers/project/statistic.min.js',
+                    'assets/js/directives/datetimepicker.min.js'
                 ]);
             }]
         }
@@ -184,13 +175,13 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/statistic.min.css?rev=8f0bb83eec',
-                    'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.css',
-                    'https://static.cloudenergy.me/libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/financial.min.js?rev=359d368852',
-                    'assets/js/directives/project/financial.min.js?rev=1cb3ad2efd',
-                    'assets/js/directives/datetimepicker.min.js?rev=47a49ab0e8',
-                    'assets/js/factorys/uuid.min.js?rev=85528f3b0b'
+                    'assets/css/project/statistic.min.css',
+                    static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
+                    static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
+                    'assets/js/controllers/project/financial.min.js',
+                    'assets/js/directives/project/financial.min.js',
+                    'assets/js/directives/datetimepicker.min.js',
+                    'assets/js/factorys/uuid.min.js'
                 ]);
             }]
         }
