@@ -19,8 +19,8 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js',
-                    'assets/js/app.error.min.js'
+                    'assets/js/controllers/login.min.js?rev=78c1bc5634',
+                    'assets/js/app.error.min.js?rev=a582bc0375'
                 ]);
             }]
         }
@@ -32,11 +32,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/dashboard.min.css',
+                    'assets/css/dashboard.min.css?rev=e7afc668f7',
                     static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
-                    'assets/js/controllers/dashboard.min.js',
-                    'assets/js/directives/auto-height.min.js',
-                    'assets/js/directives/perfect-scrollbar.min.js'
+                    'assets/js/controllers/dashboard.min.js?rev=0b33cb06fe',
+                    'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
+                    'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                 ]);
             }]
         }
@@ -55,11 +55,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/main.min.css',
+                    'assets/css/project/main.min.css?rev=03987690d7',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/main.min.js',
-                    'assets/js/directives/datetimepicker.min.js',
-                    'assets/js/directives/highcharts.min.js'
+                    'assets/js/controllers/project/main.min.js?rev=aa2eb44794',
+                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
+                    'assets/js/directives/highcharts.min.js?rev=b80f880c1a'
                 ]);
             }]
         }
@@ -78,16 +78,16 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/monitor.min.css',
+                    'assets/css/project/monitor.min.css?rev=30c90b49da',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js',
-                    'assets/js/directives/project/monitor.min.js',
-                    'assets/js/directives/datetimepicker.min.js',
-                    'assets/js/directives/highcharts.min.js',
-                    'assets/js/directives/jstree.min.js',
-                    'assets/js/directives/flatui-switch.min.js'
+                    'assets/js/controllers/project/monitor.min.js?rev=dd62b7fb41',
+                    'assets/js/directives/project/monitor.min.js?rev=672ec59014',
+                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
+                    'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
+                    'assets/js/directives/jstree.min.js?rev=47846372b7',
+                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
                 ]);
             }]
         }
@@ -106,12 +106,12 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/control.min.css',
+                    'assets/css/project/control.min.css?rev=808070724c',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js',
-                    'assets/js/directives/project/control.min.js',
-                    'assets/js/directives/jstree.min.js',
-                    'assets/js/directives/flatui-switch.min.js'
+                    'assets/js/controllers/project/control.min.js?rev=da760130cb',
+                    'assets/js/directives/project/control.min.js?rev=5484d64530',
+                    'assets/js/directives/jstree.min.js?rev=47846372b7',
+                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
                 ]);
             }]
         }
@@ -130,12 +130,12 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/analyze.min.css',
+                    'assets/css/project/analyze.min.css?rev=84d5ca7ea3',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/analyze.min.js',
-                    'assets/js/directives/project/analyze.min.js',
-                    'assets/js/directives/highcharts.min.js',
-                    'assets/js/factorys/project/analyze.min.js'
+                    'assets/js/controllers/project/analyze.min.js?rev=945ecbbc5c',
+                    'assets/js/directives/project/analyze.min.js?rev=22a74f73f7',
+                    'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
+                    'assets/js/factorys/project/analyze.min.js?rev=fcbf668590'
                 ]);
             }]
         }
@@ -154,11 +154,11 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/statistic.min.css',
+                    'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js',
-                    'assets/js/directives/datetimepicker.min.js'
+                    'assets/js/controllers/project/statistic.min.js?rev=4721fee9bc',
+                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5'
                 ]);
             }]
         }
@@ -175,13 +175,13 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/statistic.min.css',
+                    'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/financial.min.js',
-                    'assets/js/directives/project/financial.min.js',
-                    'assets/js/directives/datetimepicker.min.js',
-                    'assets/js/factorys/uuid.min.js'
+                    'assets/js/controllers/project/financial.min.js?rev=584caf66a8',
+                    'assets/js/directives/project/financial.min.js?rev=613580cbd1',
+                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
+                    'assets/js/factorys/uuid.min.js?rev=cb2874826a'
                 ]);
             }]
         }
