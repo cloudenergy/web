@@ -178,7 +178,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/financial.min.js?rev=584caf66a8',
+                    'assets/js/controllers/project/financial.min.js?rev=e255b2038b',
                     'assets/js/directives/project/financial.min.js?rev=613580cbd1',
                     'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
                     'assets/js/factorys/uuid.min.js?rev=cb2874826a'
