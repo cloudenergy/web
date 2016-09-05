@@ -88,7 +88,7 @@ angular.module('EMAPP').config(["$provide", function($provide) {
         //消息推送
         message: ['message', , {
             //催缴欠费
-            arreargereminder: {}
+            remindrecharge: {}
         }],
         //社会属性
         customer: ['customer', , {

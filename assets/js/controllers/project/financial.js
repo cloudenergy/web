@@ -20,6 +20,9 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
 
     self.autoHeight = 15;
 
+    self.action = $stateParams.action;
+    self.account = $stateParams.account;
+
     //tabs - start
     self.tabs = {
         nearest: '最近充值',
@@ -33,23 +36,8 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
     //日期选择
     self.fromDate_ID = 'form_' + uuid(8);
     self.toDate_ID = 'to_' + uuid(8);
-    self.fromDate = $filter('date')(nowDate, 'yyyy-MM-01');
-    self.toDate = $filter('date')(nowDate, 'yyyy-MM-dd');
-    // $timeout(function(fromDate, toDate, change) {
-
-    //     fromDate = $('#' + self.fromDate_ID);
-    //     toDate = $('#' + self.toDate_ID);
-
-    //     change = function(event) {
-    //         $timeout(function() {
-    //             event.date && event.oldDate && event.date.format('YYYYMMDD') !== event.oldDate.format('YYYYMMDD') && self.load[self.tabActive]();
-    //         });
-    //     };
-
-    //     fromDate.bind('dp.change', change);
-    //     toDate.bind('dp.change', change);
-
-    // });
+    self.fromDate = $stateParams.startDate || $filter('date')(nowDate, 'yyyy-MM-01');
+    self.toDate = $stateParams.endDate || $filter('date')(nowDate, 'yyyy-MM-dd');
 
     //充值方式
     self.manual = [{
@@ -114,10 +102,9 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
 
     //催缴欠费
     self.reminder = function(entity) {
-        $api.message.arreargereminder({
+        $api.message.remindrecharge({
             uid: entity.departmentaccount,
-            project: EMAPP.Project.current._id,
-            gateway: 'EMAIL'
+            project: EMAPP.Project.current._id
         }, function() {
             entity.remindercount += 1;
         });
