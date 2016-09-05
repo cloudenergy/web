@@ -26,15 +26,15 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard', {
         url: '/dashboard{projectid}',
-        templateUrl: 'assets/html/dashboard.html?rev=f648c8840e',
+        templateUrl: 'assets/html/dashboard.html?rev=2a02871c4b',
         controller: 'EMAPP.dashboard',
         controllerAs: 'self',
         resolve: {
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/dashboard.min.css?rev=e7afc668f7',
+                    'assets/css/dashboard.min.css?rev=b1c237a8e3',
                     static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
-                    'assets/js/controllers/dashboard.min.js?rev=0b33cb06fe',
+                    'assets/js/controllers/dashboard.min.js?rev=eb068972be',
                     'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                     'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                 ]);
@@ -67,7 +67,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/monitor',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/monitor.html?rev=1536699ad7',
+                templateUrl: 'assets/html/project/monitor.html?rev=7a409d1cb9',
                 controller: 'project.monitor',
                 controllerAs: 'self'
             }
@@ -82,12 +82,14 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js?rev=dd62b7fb41',
+                    'assets/js/controllers/project/monitor.min.js?rev=b190dcf012',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
                     'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
-                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
+                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
+                    'assets/js/directives/customer.min.js?rev=ab552a2840'
+
                 ]);
             }]
         }
@@ -95,7 +97,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         url: '/control',
         views: {
             'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/control.html?rev=4a3b03534b',
+                templateUrl: 'assets/html/project/control.html?rev=6024eb0b83',
                 controller: 'project.control',
                 controllerAs: 'self'
             }
@@ -108,10 +110,12 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=808070724c',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=da760130cb',
+                    'assets/js/controllers/project/control.min.js?rev=b26c47d76f',
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
-                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f'
+                    'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
+                    'assets/js/directives/customer.min.js?rev=ab552a2840'
+
                 ]);
             }]
         }
