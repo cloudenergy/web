@@ -58,7 +58,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/main.min.css?rev=03987690d7',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
                     'assets/js/controllers/project/main.min.js?rev=aa2eb44794',
-                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
+                    'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a'
                 ]);
             }]
@@ -84,7 +84,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     static + 'libs/highcharts-4.2.5/highcharts.js',
                     'assets/js/controllers/project/monitor.min.js?rev=b190dcf012',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
-                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
+                    'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
@@ -161,8 +161,8 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=4721fee9bc',
-                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5'
+                    'assets/js/controllers/project/statistic.min.js?rev=c5663843d4',
+                    'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e'
                 ]);
             }]
         }
@@ -184,7 +184,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     'assets/js/controllers/project/financial.min.js?rev=e255b2038b',
                     'assets/js/directives/project/financial.min.js?rev=613580cbd1',
-                    'assets/js/directives/datetimepicker.min.js?rev=6becf25bc5',
+                    'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/factorys/uuid.min.js?rev=cb2874826a'
                 ]);
             }]
