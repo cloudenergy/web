@@ -1,8 +1,6 @@
-EMAPP.templateCache.put('assets/html/login.html?rev=f86da396e5', '<div class="login-container"><div class="login-position text-center"><form class="login-form" ng-submit="self.login()" novalidate><div class="form-group"><img ng-src="assets/img/logo.png" title="智慧云能源用户平台" ng-if="!self.isBasic"> <img src="assets/img/logo_basic.png" title="柏诚智能云能源用户平台" ng-if="self.isBasic"></div><div class="form-group has-feedback"><input type="text" class="form-control login-field" ng-model="self.user" maxlength="50" placeholder="用户名"> <i class="form-control-feedback emweb web-card"></i></div><div class="form-group has-feedback"><input type="password" class="form-control login-field" ng-model="self.passwd" maxlength="18" placeholder="密码"> <i class="form-control-feedback emweb web-key"></i></div><div class="input-group show"><label class="checkbox pull-left" for="remember" role="button"><input type="checkbox" id="remember" checked="checked" ng-model="self.remember" data-toggle="checkbox"> 保存一个月</label><button type="submit" class="btn btn-primary pull-right">登录 <i class="emweb web-login"></i></button></div></form></div></div>');
+EMAPP.templateCache.put('assets/html/login.html?rev=b288df85ce', '<div class="login-container"><div class="login-position text-center"><form class="login-form" name="loginForm" ng-submit="self.login()" login-form><div class="form-group"><img ng-src="assets/img/logo.png" title="智慧云能源用户平台" ng-if="!self.isBasic"> <img src="assets/img/logo_basic.png" title="柏诚智能云能源用户平台" ng-if="self.isBasic"></div><div class="form-group"><input type="text" class="form-control login-field" name="user" ng-model="self.user" maxlength="50" placeholder="账号/用户名" required><label class="login-field-icon fui-user"></label><span class="form-control-feedback"><a href="javascript:void(0)" class="fui-cross text-muted" ng-if="loginForm.user.$viewValue" ng-click="self.clearUserInput()"></a> <i class="fui-question-circle text-warning" ng-if="loginForm.user.$dirty&&loginForm.user.$error.required"></i></span></div><div class="form-group"><input type="password" class="form-control login-field" name="password" ng-model="self.passwd" maxlength="18" placeholder="密码" readonly="readonly" required><label class="login-field-icon fui-lock"></label><span class="form-control-feedback"><a href="javascript:void(0)" class="fui-cross text-muted" ng-if="loginForm.password.$viewValue" ng-click="self.clearPasswdInput()"></a> <i class="fui-question-circle text-warning" ng-if="loginForm.password.$dirty&&loginForm.password.$error.required"></i></span></div><div class="input-group show"><label class="checkbox pull-left" role="button"><input type="checkbox" name="remember" ng-model="self.remember" data-toggle="checkbox"> 一个月免登录</label><button type="submit" class="btn btn-primary pull-right">登录 <i class="fui-exit"></i></button></div></form></div></div>');
 
 angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$api", "$cookies", "md5", "SweetAlert", function($state, $stateParams, $api, $cookies, md5, SweetAlert) {
-
-    $(':checkbox').radiocheck();
 
     var self = this,
         remember,
@@ -45,6 +43,25 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
 
     self.isBasic = /^basic\./.test(location.host);
 
+    //输入框
+    self.user = localStorage.loginUser;
+    self.passwd = localStorage.loginPasswd;
+    self.remember = !!localStorage.loginRemember;
+    self.clearUserInput = function() {
+        delete localStorage.loginUser;
+        delete self.user;
+        delete localStorage.loginPasswd;
+        delete self.passwd;
+        delete localStorage.loginRemember;
+        delete self.remember;
+    };
+    self.clearPasswdInput = function() {
+        delete localStorage.loginPasswd;
+        delete self.passwd;
+        delete localStorage.loginRemember;
+        delete self.remember;
+    };
+
     //登录
     self.login = function() {
 
@@ -52,11 +69,23 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
             passwd = this && this.passwd,
             msg = [];
         remember = self.remember;
-        !user && msg.push('帐号');
+        !user && msg.push('账号/用户名');
         !passwd && msg.push('密码');
 
         msg = msg.join('与');
-        msg && SweetAlert.warning('请输入您的' + msg);
+        if (msg) {
+            SweetAlert.warning('请输入您的' + msg);
+        } else {
+            delete localStorage.loginUser;
+            delete localStorage.loginPasswd;
+            delete localStorage.loginRemember;
+            //存储登录参数
+            localStorage.loginUser = self.user;
+            if (self.remember) {
+                localStorage.loginPasswd = self.passwd;
+                localStorage.loginRemember = self.remember;
+            }
+        }
 
         !msg && $api.auth.login({
             user: user,
@@ -98,4 +127,29 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
 
     action === 'logout' && self.logout();
 
+}]).directive('loginForm', ["$timeout", function($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+
+            //input user
+            element.find('input[name=user]').on('invalid', function() {
+                $timeout(scope.loginForm.user.$setDirty);
+                return false;
+            });
+
+            //input password
+            element.find('input[name=password]').on('invalid', function() {
+                $timeout(scope.loginForm.password.$setDirty);
+                return false;
+            });
+            $timeout(function() {
+                element.find('input[name=password]').removeAttr('readonly');
+            }, 500);
+
+            //input remember
+            element.find('input[name=remember]').radiocheck();
+
+        }
+    };
 }]);

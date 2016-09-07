@@ -9,7 +9,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
     /*  ui-router setup  */
     $stateProvider.state('auth', {
         url: '/dashboard/auth/:action',
-        templateUrl: 'assets/html/login.html?rev=f86da396e5',
+        templateUrl: 'assets/html/login.html?rev=b288df85ce',
         controller: 'EMAPP.login',
         controllerAs: 'self',
         data: {
@@ -19,7 +19,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             deps: ["$ocLazyLoad", function($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=78c1bc5634',
+                    'assets/js/controllers/login.min.js?rev=facfc0ecc0',
                     'assets/js/app.error.min.js?rev=a582bc0375'
                 ]);
             }]

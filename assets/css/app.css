@@ -82,11 +82,16 @@ body {
   border-radius: 6px; }
   .login-form img {
     max-width: 100%; }
-  .login-form .form-control + .emweb {
-    font-size: 24px; }
-  .login-form .form-control:focus,
-  .login-form .form-control:focus + .emweb {
-    color: #1abc9c; }
+  .login-form .login-field-icon {
+    left: 15px;
+    right: auto;
+    margin-bottom: 0; }
+  .login-form .login-field {
+    padding-left: 36px; }
+    .login-form .login-field[readonly] {
+      background-color: #FFF; }
+  .login-form .form-control-feedback {
+    pointer-events: auto; }
 
 /*  sweetalert插件  */
 .sweet-alert {
