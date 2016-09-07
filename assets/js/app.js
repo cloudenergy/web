@@ -3,6 +3,12 @@ window.EMAPP = angular.module('EMAPP', ['ngCookies', 'ngResource', 'ui.router', 
 .run(["$templateCache", function($templateCache) {
     /*  public $templateCache  */
     EMAPP.templateCache = $templateCache;
+    /*  bind focus class to .form-control  */
+    $(document.body).on('focus', '.form-group > input.form-control, .input-group > input.form-control', function() {
+        $(this).closest('.input-group, .form-group').addClass('focus');
+    }).on('blur', '.form-group > input.form-control, .input-group > input.form-control', function() {
+        $(this).closest('.input-group, .form-group').removeClass('focus');
+    });
 }]);
 
 /*  angular rendering  */

@@ -188,7 +188,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     width: '*',
                     minWidth: 100
                 }, {
-                    displayName: self.startDate,
+                    displayName: moment(self.startDate).format('YYYY年MM月DD日'),
                     name: 'min',
                     type: 'number',
                     width: '*',
@@ -196,7 +196,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
-                    displayName: self.endDate,
+                    displayName: moment(self.endDate).format('YYYY年MM月DD日'),
                     name: 'max',
                     type: 'number',
                     width: '*',
@@ -219,7 +219,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     name: 'price',
                     type: 'number',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 200,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
