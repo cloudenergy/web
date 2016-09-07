@@ -188,7 +188,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     width: '*',
                     minWidth: 100
                 }, {
-                    displayName: moment(self.startDate).format('YYYY年MM月DD日'),
+                    displayName: moment(self.startDate).format('YYYY年M月D日'),
                     name: 'min',
                     type: 'number',
                     width: '*',
@@ -196,7 +196,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
-                    displayName: moment(self.endDate).format('YYYY年MM月DD日'),
+                    displayName: moment(self.endDate).format('YYYY年M月D日'),
                     name: 'max',
                     type: 'number',
                     width: '*',
@@ -410,10 +410,10 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     if (data.length) {
                         angular.forEach(data[0].usage, function(val, key) {
                             this.push({
-                                displayName: $filter('date')(key, 'yyyy-M-d'),
+                                displayName: $filter('date')(key, 'yyyy年M月d日'),
                                 name: 'day' + $filter('date')(key, 'yyyyMMdd'),
                                 width: '*',
-                                minWidth: 110,
+                                minWidth: 120,
                                 headerCellClass: 'text-right',
                                 cellClass: 'text-right'
                             })

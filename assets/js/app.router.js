@@ -161,7 +161,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=c5663843d4',
+                    'assets/js/controllers/project/statistic.min.js?rev=4c674df065',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e'
                 ]);
             }]
