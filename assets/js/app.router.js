@@ -26,7 +26,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard', {
         url: '/dashboard{projectid}',
-        templateUrl: 'assets/html/dashboard.html?rev=2a02871c4b',
+        templateUrl: 'assets/html/dashboard.html?rev=af526a1898',
         controller: 'EMAPP.dashboard',
         controllerAs: 'self',
         resolve: {
@@ -34,7 +34,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/dashboard.min.css?rev=b1c237a8e3',
                     static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
-                    'assets/js/controllers/dashboard.min.js?rev=eb068972be',
+                    'assets/js/controllers/dashboard.min.js?rev=d09379fbb0',
                     'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                     'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                 ]);
@@ -42,13 +42,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.main', {
         url: '/main',
-        views: {
-            'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/main/view.html?rev=4f6956cb6f',
-                controller: 'project.main',
-                controllerAs: 'self'
-            }
-        },
+        templateUrl: 'assets/html/project/main/view.html?rev=4f6956cb6f',
+        controller: 'project.main',
+        controllerAs: 'self',
         data: {
             title: '首页'
         },
@@ -65,13 +61,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.monitor', {
         url: '/monitor',
-        views: {
-            'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/monitor.html?rev=7a409d1cb9',
-                controller: 'project.monitor',
-                controllerAs: 'self'
-            }
-        },
+        templateUrl: 'assets/html/project/monitor.html?rev=7a409d1cb9',
+        controller: 'project.monitor',
+        controllerAs: 'self',
         data: {
             title: '设备监控'
         },
@@ -95,13 +87,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.control', {
         url: '/control',
-        views: {
-            'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/control.html?rev=6024eb0b83',
-                controller: 'project.control',
-                controllerAs: 'self'
-            }
-        },
+        templateUrl: 'assets/html/project/control.html?rev=6024eb0b83',
+        controller: 'project.control',
+        controllerAs: 'self',
         data: {
             title: '设备控制'
         },
@@ -121,13 +109,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.analyze', {
         url: '/analyze',
-        views: {
-            'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/analyze/view.html?rev=634a03a343',
-                controller: 'project.analyze',
-                controllerAs: 'self'
-            }
-        },
+        templateUrl: 'assets/html/project/analyze/view.html?rev=634a03a343',
+        controller: 'project.analyze',
+        controllerAs: 'self',
         data: {
             title: '能耗分析'
         },
@@ -145,13 +129,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.statistic', {
         url: '/statistic/:tab',
-        views: {
-            'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/statistic.html?rev=74ee267abe',
-                controller: 'project.statistic',
-                controllerAs: 'self'
-            }
-        },
+        templateUrl: 'assets/html/project/statistic.html?rev=74ee267abe',
+        controller: 'project.statistic',
+        controllerAs: 'self',
         data: {
             title: '能耗统计'
         },
@@ -161,18 +141,14 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=4c674df065',
+                    'assets/js/controllers/project/statistic.min.js?rev=30cd74c8ef',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e'
                 ]);
             }]
         }
     }).state('dashboard.financial', {
         url: '/financial/:tab',
-        views: {
-            'dashboard@dashboard': {
-                templateUrl: 'assets/html/project/financial/view.html?rev=54c02b78aa'
-            }
-        },
+        templateUrl: 'assets/html/project/financial/view.html?rev=54c02b78aa',
         data: {
             title: '财务'
         },

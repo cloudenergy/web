@@ -110,7 +110,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
 
         self.rangeDay = {
             settlereport: 90,
-            monthlyreport: 30
+            monthlyreport: 31
         }[tabKey] || 0;
 
         self.tabActive = tabKey;
