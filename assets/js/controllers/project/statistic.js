@@ -109,7 +109,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
         self.endDate = $filter('date')(nowDate, 'yyyy-MM-dd');
 
         self.rangeDay = {
-            settlereport: 90,
+            settlereport: 183,
             monthlyreport: 31
         }[tabKey] || 0;
 

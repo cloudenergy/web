@@ -109,7 +109,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.analyze', {
         url: '/analyze',
-        templateUrl: 'assets/html/project/analyze/view.html?rev=634a03a343',
+        templateUrl: 'assets/html/project/analyze/view.html?rev=ccfb46bdb6',
         controller: 'project.analyze',
         controllerAs: 'self',
         data: {
@@ -120,7 +120,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/analyze.min.css?rev=84d5ca7ea3',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/analyze.min.js?rev=945ecbbc5c',
+                    'assets/js/controllers/project/analyze.min.js?rev=a08fb04069',
                     'assets/js/directives/project/analyze.min.js?rev=22a74f73f7',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
                     'assets/js/factorys/project/analyze.min.js?rev=fcbf668590'
@@ -141,7 +141,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=30cd74c8ef',
+                    'assets/js/controllers/project/statistic.min.js?rev=226039a6c5',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e'
                 ]);
             }]
