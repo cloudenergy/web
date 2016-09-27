@@ -1,40 +1,43 @@
-angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$stateProvider", function($locationProvider, $urlRouterProvider, $stateProvider) {
+angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$stateProvider", function ($locationProvider, $urlRouterProvider, $stateProvider) {
     /*  HTML5 mode  */
     $locationProvider.html5Mode(true);
-    /*  ui-router otherwise  */
-    $urlRouterProvider.otherwise(function($injector, $location) {
-        $location.url(EMAPP.User.token ? '/dashboard' : '/dashboard/auth/login').replace();
-    });
+    // For unmatched routes
+    $urlRouterProvider.otherwise('/dashboard/main');
+
     var static = 'https://static.cloudenergy.me/';
     /*  ui-router setup  */
-    $stateProvider.state('auth', {
+    $stateProvider.state('unmatched', {
+        url: '/',
+        controller: ["$state", function ($state) {
+            $state.go($state.prev.state || 'dashboard.main', $state.prev.params);
+        }]
+    }).state('auth', {
         url: '/dashboard/auth/:action',
         templateUrl: 'assets/html/login.html?rev=b288df85ce',
         controller: 'EMAPP.login',
         controllerAs: 'self',
-        data: {
-            title: '用户登录'
-        },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
+                document.title = '用户登录';
                 return $ocLazyLoad.load([
                     static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=facfc0ecc0',
-                    'assets/js/app.error.min.js?rev=a582bc0375'
+                    'assets/js/controllers/login.min.js?rev=a3b0ec6803'
                 ]);
             }]
         }
     }).state('dashboard', {
+        abstract: true,
         url: '/dashboard{projectid}',
         templateUrl: 'assets/html/dashboard.html?rev=af526a1898',
         controller: 'EMAPP.dashboard',
         controllerAs: 'self',
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
+                document.title = '';
                 return $ocLazyLoad.load([
                     'assets/css/dashboard.min.css?rev=b1c237a8e3',
                     static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
-                    'assets/js/controllers/dashboard.min.js?rev=d09379fbb0',
+                    'assets/js/controllers/dashboard.min.js?rev=df12b9a0c4',
                     'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                     'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                 ]);
@@ -49,7 +52,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             title: '首页'
         },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/main.min.css?rev=03987690d7',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
@@ -68,7 +71,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             title: '设备监控'
         },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/monitor.min.css?rev=30c90b49da',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
@@ -94,7 +97,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             title: '设备控制'
         },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=808070724c',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
@@ -116,7 +119,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             title: '能耗分析'
         },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/analyze.min.css?rev=84d5ca7ea3',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
@@ -136,12 +139,12 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             title: '能耗统计'
         },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=226039a6c5',
+                    'assets/js/controllers/project/statistic.min.js?rev=6e2a2964aa',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e'
                 ]);
             }]
@@ -153,7 +156,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             title: '财务'
         },
         resolve: {
-            deps: ["$ocLazyLoad", function($ocLazyLoad) {
+            deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
@@ -166,56 +169,60 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             }]
         }
     });
-}]).run(["$rootScope", "$cookies", "$state", function($rootScope, $cookies, $state) {
+}]).run(["$rootScope", "$cookies", "$q", "$state", "Menu", "User", "Project", function ($rootScope, $cookies, $q, $state, Menu, User, Project) {
 
     /*  get cookies  */
-    angular.forEach($cookies.getAll(), function(value, key) {
+    angular.forEach($cookies.getAll(), function (value, key) {
         this[key] = value;
     }, EMAPP.User = {});
 
     //remember prev state
     $state.prev = {};
 
-    //State Change Events
-    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if (toParams.projectid && !sessionStorage.projectid) {
             sessionStorage.projectid = toParams.projectid;
             delete toParams.projectid;
         }
-
-        if (!EMAPP.User.token) {
-            if (toState.name !== 'auth') {
-                $state.prev.state = toState.name;
-                $state.prev.params = toParams;
-                event.preventDefault();
-                $state.go('auth', angular.extend(toParams, {
-                    action: 'login'
-                }));
-            }
-        } else {
-
-            if (toState.name !== 'dashboard' && toState.name !== 'auth') {
-                $state.prev.state = toState.name;
-                $state.prev.params = toParams;
+        if (toState.name !== 'auth') {
+            $state.prev.state = toState.name;
+            $state.prev.params = toParams;
+            if (EMAPP.User.token) {
                 if (!EMAPP.Project) {
                     event.preventDefault();
-                    $state.go('dashboard', toParams);
+                    $q.all([angular.isDefined(EMAPP.User.groupmode) || User(), Project()]).then(function () {
+
+                        angular.forEach(Menu, function (item) {
+                            if (EMAPP.User.groupmode) {
+                                item.groupmode && this.push(item);
+                            } else {
+                                this.push(item);
+                            }
+                        }, $rootScope.menuData = []);
+
+                        $state.notfound = true;
+                        angular.forEach($rootScope.menuData, function (item) {
+                            if ($state.prev.state && ~$state.prev.state.indexOf(item.state)) {
+                                delete $state.notfound;
+                            }
+                        });
+
+                        if ($state.notfound) {
+                            delete $state.notfound;
+                            $state.go('dashboard.main', $state.prev.params);
+                        } else {
+                            $state.go($state.prev.state || 'dashboard.main', $state.prev.params);
+                        }
+
+                    });
                 }
-            } else if (toState.name === 'auth') {
-                $state.prev.state = fromState.name;
-                $state.prev.params = fromParams;
+            } else {
+                event.preventDefault();
+                $state.go('auth', {
+                    action: 'login'
+                });
             }
-
         }
-
-    });
-    $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-        (function(title) {
-            toState.data && toState.data.title && title.push(toState.data.title);
-            EMAPP.title && title.push(EMAPP.title);
-            document.title = title.join(' - ');
-        }([]));
     });
 
 }]);
