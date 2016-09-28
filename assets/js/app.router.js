@@ -3,9 +3,8 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
     $locationProvider.html5Mode(true);
     // For unmatched routes
     $urlRouterProvider.otherwise('/dashboard/main');
-
-    var static = 'https://static.cloudenergy.me/';
     /*  ui-router setup  */
+    var static = 'https://static.cloudenergy.me/';
     $stateProvider.state('unmatched', {
         url: '/',
         controller: ["$state", function ($state) {
