@@ -62,7 +62,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js?rev=c21875d589',
+                    'assets/js/controllers/project/monitor.min.js?rev=32b0bd3456',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
@@ -83,7 +83,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=808070724c',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=4bab37791e',
+                    'assets/js/controllers/project/control.min.js?rev=a36ae9fdb6',
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
