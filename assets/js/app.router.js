@@ -1,6 +1,6 @@
 angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$stateProvider", function ($locationProvider, $urlRouterProvider, $stateProvider) {
 
-    /*  ui-router setup  */
+    // setup router
     var static = 'https://static.cloudenergy.me/';
     $stateProvider.state('auth', {
         url: '/dashboard/auth/:action',
@@ -75,15 +75,15 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.control', {
         url: '/control',
-        templateUrl: 'assets/html/project/control.html?rev=ed807e775d',
+        templateUrl: 'assets/html/project/control.html?rev=10a6c15077',
         controller: 'project.control',
         controllerAs: 'self',
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
-                    'assets/css/project/control.min.css?rev=808070724c',
+                    'assets/css/project/control.min.css?rev=6f54248211',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=a36ae9fdb6',
+                    'assets/js/controllers/project/control.min.js?rev=9c1dbdd280',
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
@@ -143,23 +143,31 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     });
 
-    /*  HTML5 mode  */
+    // HTML5 mode
     $locationProvider.html5Mode(true);
 
-    // Registers a handler for a given url matching
-    $urlRouterProvider.when(/^(\/|\/dashboard|\/dashboard\/)$/, ["$state", "$stateParams", function ($state, $stateParams) {
-        $state.transitionTo('dashboard.main', $stateParams);
-    }]);
+    // invalid router
+    $urlRouterProvider.otherwise(function ($injector, $location) {
+        $location.otherwise = true;
+    });
 
-}]).run(["$rootScope", "$cookies", "$q", "$state", "MENUCONFIG", "User", "Project", function ($rootScope, $cookies, $q, $state, MENUCONFIG, User, Project) {
+}]).run(["$rootScope", "$cookies", "$q", "$location", "$state", "MENUCONFIG", "User", "Project", function ($rootScope, $cookies, $q, $location, $state, MENUCONFIG, User, Project) {
 
-    /*  get cookies  */
+    // get cookies
     angular.forEach($cookies.getAll(), function (value, key) {
         this[key] = value;
     }, EMAPP.User = {});
 
     //remember prev state
     $state.prev = {};
+
+    $rootScope.$on('$locationChangeSuccess', function (event) {
+        if ($location.otherwise) {
+            delete $location.otherwise;
+            event.preventDefault();
+            $state.transitionTo('dashboard.main');
+        }
+    });
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
         if (toParams.projectid && !sessionStorage.projectid) {
