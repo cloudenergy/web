@@ -6,11 +6,8 @@ angular.module('EMAPP').factory('User', ["$q", "$api", "$state", "SweetAlert", f
             EMAPP.User.groupmode = EMAPP.User.groupuser && !sessionStorage.projectid;
             deferred.resolve();
         }, function () {
-            deferred.reject();
             SweetAlert.warning('请重新登录');
-            $state.go('auth', {
-                action: 'login'
-            });
+            deferred.reject();
         });
         return deferred.promise;
     };

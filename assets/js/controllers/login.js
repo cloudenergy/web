@@ -49,8 +49,6 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
 
         };
 
-    delete sessionStorage.projectid;
-
     self.isBasic = /^basic\./.test(location.host);
 
     //输入框

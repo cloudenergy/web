@@ -21,7 +21,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 document.title = '用户登录';
                 return $ocLazyLoad.load([
                     static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=a3b0ec6803'
+                    'assets/js/controllers/login.min.js?rev=edf8dd3785'
                 ]);
             }]
         }
@@ -48,9 +48,6 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         templateUrl: 'assets/html/project/main/view.html?rev=4f6956cb6f',
         controller: 'project.main',
         controllerAs: 'self',
-        data: {
-            title: '首页'
-        },
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -64,12 +61,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.monitor', {
         url: '/monitor',
-        templateUrl: 'assets/html/project/monitor.html?rev=7a409d1cb9',
+        templateUrl: 'assets/html/project/monitor.html?rev=20a1c73e13',
         controller: 'project.monitor',
         controllerAs: 'self',
-        data: {
-            title: '设备监控'
-        },
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -77,7 +71,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js?rev=b190dcf012',
+                    'assets/js/controllers/project/monitor.min.js?rev=c21875d589',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
@@ -90,18 +84,15 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.control', {
         url: '/control',
-        templateUrl: 'assets/html/project/control.html?rev=6024eb0b83',
+        templateUrl: 'assets/html/project/control.html?rev=ed807e775d',
         controller: 'project.control',
         controllerAs: 'self',
-        data: {
-            title: '设备控制'
-        },
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=808070724c',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=b26c47d76f',
+                    'assets/js/controllers/project/control.min.js?rev=4bab37791e',
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
@@ -115,9 +106,6 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         templateUrl: 'assets/html/project/analyze/view.html?rev=ccfb46bdb6',
         controller: 'project.analyze',
         controllerAs: 'self',
-        data: {
-            title: '能耗分析'
-        },
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -135,9 +123,6 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         templateUrl: 'assets/html/project/statistic.html?rev=74ee267abe',
         controller: 'project.statistic',
         controllerAs: 'self',
-        data: {
-            title: '能耗统计'
-        },
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -152,9 +137,6 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
     }).state('dashboard.financial', {
         url: '/financial/:tab',
         templateUrl: 'assets/html/project/financial/view.html?rev=54c02b78aa',
-        data: {
-            title: '财务'
-        },
         resolve: {
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 return $ocLazyLoad.load([
@@ -169,7 +151,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             }]
         }
     });
-}]).run(["$rootScope", "$cookies", "$q", "$state", "Menu", "User", "Project", function ($rootScope, $cookies, $q, $state, Menu, User, Project) {
+}]).run(["$rootScope", "$cookies", "$q", "$state", "MENUCONFIG", "User", "Project", function ($rootScope, $cookies, $q, $state, MENUCONFIG, User, Project) {
 
     /*  get cookies  */
     angular.forEach($cookies.getAll(), function (value, key) {
@@ -184,7 +166,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             sessionStorage.projectid = toParams.projectid;
             delete toParams.projectid;
         }
-        if (toState.name !== 'auth') {
+        if (toState.name === 'auth') {
+            delete sessionStorage.projectid;
+        } else {
             $state.prev.state = toState.name;
             $state.prev.params = toParams;
             if (EMAPP.User.token) {
@@ -192,7 +176,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     event.preventDefault();
                     $q.all([angular.isDefined(EMAPP.User.groupmode) || User(), Project()]).then(function () {
 
-                        angular.forEach(Menu, function (item) {
+                        angular.forEach(MENUCONFIG, function (item) {
                             if (EMAPP.User.groupmode) {
                                 item.groupmode && this.push(item);
                             } else {
@@ -214,6 +198,10 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                             $state.go($state.prev.state || 'dashboard.main', $state.prev.params);
                         }
 
+                    }, function () {
+                        $state.go('auth', {
+                            action: 'login'
+                        });
                     });
                 }
             } else {

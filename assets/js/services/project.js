@@ -15,11 +15,8 @@ angular.module('EMAPP').factory('Project', ["$q", "$api", "$state", "SweetAlert"
             if (EMAPP.Project.length) {
                 deferred.resolve();
             } else {
-                delete sessionStorage.projectid;
                 SweetAlert.warning('没有可用项目');
-                $state.go('auth', {
-                    action: 'login'
-                });
+                deferred.reject();
             }
 
         });
