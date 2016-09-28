@@ -1,16 +1,8 @@
 angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$stateProvider", function ($locationProvider, $urlRouterProvider, $stateProvider) {
-    /*  HTML5 mode  */
-    $locationProvider.html5Mode(true);
-    // For unmatched routes
-    $urlRouterProvider.otherwise('/dashboard/main');
+
     /*  ui-router setup  */
     var static = 'https://static.cloudenergy.me/';
-    $stateProvider.state('unmatched', {
-        url: '/',
-        controller: ["$state", function ($state) {
-            $state.go($state.prev.state || 'dashboard.main', $state.prev.params);
-        }]
-    }).state('auth', {
+    $stateProvider.state('auth', {
         url: '/dashboard/auth/:action',
         templateUrl: 'assets/html/login.html?rev=b288df85ce',
         controller: 'EMAPP.login',
@@ -20,7 +12,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 document.title = '用户登录';
                 return $ocLazyLoad.load([
                     static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=edf8dd3785'
+                    'assets/js/controllers/login.min.js?rev=2f99f59663'
                 ]);
             }]
         }
@@ -36,7 +28,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/dashboard.min.css?rev=b1c237a8e3',
                     static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
-                    'assets/js/controllers/dashboard.min.js?rev=df12b9a0c4',
+                    'assets/js/controllers/dashboard.min.js?rev=e0a966dac5',
                     'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                     'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                 ]);
@@ -150,6 +142,15 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             }]
         }
     });
+
+    /*  HTML5 mode  */
+    $locationProvider.html5Mode(true);
+
+    // Registers a handler for a given url matching
+    $urlRouterProvider.when(/^(\/|\/dashboard|\/dashboard\/)$/, ["$state", "$stateParams", function ($state, $stateParams) {
+        $state.transitionTo('dashboard.main', $stateParams);
+    }]);
+
 }]).run(["$rootScope", "$cookies", "$q", "$state", "MENUCONFIG", "User", "Project", function ($rootScope, $cookies, $q, $state, MENUCONFIG, User, Project) {
 
     /*  get cookies  */
@@ -167,6 +168,8 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
         if (toState.name === 'auth') {
             delete sessionStorage.projectid;
+            delete EMAPP.Project;
+            EMAPP.User = {};
         } else {
             $state.prev.state = toState.name;
             $state.prev.params = toParams;

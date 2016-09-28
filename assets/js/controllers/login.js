@@ -31,6 +31,7 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
             //赋值到User对象中
             EMAPP.User = data && data.result || EMAPP.User || {};
             EMAPP.User.groupmode = EMAPP.User.groupuser;
+
             //写入cookie
             angular.forEach(['token', 'user'], function (key) {
                 EMAPP.User[key] && $cookies.put(key, EMAPP.User[key] || false, {
@@ -39,8 +40,9 @@ angular.module('EMAPP').controller('EMAPP.login', ["$state", "$stateParams", "$a
                     expires: remember && moment().add(1, 'months')._d || undefined
                 });
             });
+
             if (EMAPP.User.token) {
-                $state.go($state.prev.state || 'dashboard.main', EMAPP.User.groupuser && $state.prev.params || {});
+                $state.go($state.prev.state || 'dashboard.main', EMAPP.User.groupmode && $state.prev.params || {});
             } else {
                 $state.go('auth', {
                     action: 'login'

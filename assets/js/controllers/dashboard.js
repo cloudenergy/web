@@ -15,25 +15,18 @@ angular.module('EMAPP').controller('EMAPP.dashboard', ["$rootScope", "$scope", "
     self.adminLink = /cloudenergy\.me/.test(location.hostname) ? location.origin.replace('pre.', 'preadmin.').replace('www.', 'admin.').replace('basic.', 'admin.') : '/admin';
 
     if (self.groupmode) {
-
         document.title = EMAPP.title = self.projectName = '集团平台';
-
     } else {
-
         EMAPP.Project.current = EMAPP.Project[0] || {};
-
         document.title = EMAPP.title = self.projectName = EMAPP.Project.current.title || self.projectName;
-
     }
 
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
         self.menuData.active = toState.name;
     });
 
-    // cleanup
     $scope.$on('$destroy', function () {
         $timeout.cancel(timeout);
-        delete EMAPP.Project;
     });
 
 }]);
