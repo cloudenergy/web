@@ -75,7 +75,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.control', {
         url: '/control',
-        templateUrl: 'assets/html/project/control.html?rev=10a6c15077',
+        templateUrl: 'assets/html/project/control.html?rev=c3c1560df4',
         controller: 'project.control',
         controllerAs: 'self',
         resolve: {
@@ -83,7 +83,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=6f54248211',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=9c1dbdd280',
+                    'assets/js/controllers/project/control.min.js?rev=009eb67561',
                     'assets/js/directives/project/control.min.js?rev=5484d64530',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
@@ -105,7 +105,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/js/controllers/project/analyze.min.js?rev=a08fb04069',
                     'assets/js/directives/project/analyze.min.js?rev=22a74f73f7',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
-                    'assets/js/factorys/project/analyze.min.js?rev=fcbf668590'
+                    'assets/js/factories/project/analyze.min.js?rev=fcbf668590'
                 ]);
             }]
         }
@@ -137,7 +137,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/js/controllers/project/financial.min.js?rev=e255b2038b',
                     'assets/js/directives/project/financial.min.js?rev=613580cbd1',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
-                    'assets/js/factorys/uuid.min.js?rev=cb2874826a'
+                    'assets/js/factories/uuid.min.js?rev=cb2874826a'
                 ]);
             }]
         }

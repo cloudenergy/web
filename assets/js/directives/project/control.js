@@ -1,8 +1,8 @@
-angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function($api, $timeout) {
+angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function ($api, $timeout) {
     return {
         restrict: 'A',
         scope: {},
-        template: function() {
+        template: function () {
             return [
                 '<div class="ui-slider"></div>',
                 '<div class="text-left" style="min-width:200px;line-height:24px;">',
@@ -11,9 +11,9 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
                 '</div>'
             ].join('');
         },
-        link: function(scope, element, attrs, ctrl) {
+        link: function (scope, element, attrs, ctrl) {
             if (!angular.isUndefined(attrs.command)) {
-                scope.$watch(attrs.command, function() {
+                scope.$watch(attrs.command, function () {
                     var timer = null,
                         options = angular.extend({
                             min: 1,
@@ -21,10 +21,10 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
                             value: 5,
                             orientation: 'horizontal',
                             range: 'min',
-                            slide: function(event, ui) {
+                            slide: function (event, ui) {
                                 if (scope.value !== ui.value) {
                                     timer && $timeout.cancel(timer);
-                                    timer = $timeout(function() {
+                                    timer = $timeout(function () {
                                         $api.control.send({
                                             id: attrs.sensorid,
                                             command: attrs.command,
@@ -33,7 +33,7 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
                                             }
                                         });
                                     }, 500);
-                                    $timeout(function() {
+                                    $timeout(function () {
                                         scope.value = ui.value;
                                     });
                                 }
@@ -50,7 +50,7 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
     };
 }]);
 
-angular.module('EMAPP').directive('controlMode', ["$api", function($api) {
+angular.module('EMAPP').directive('controlMode', ["$api", function ($api) {
     /*
     EMC_MODE: 设置制冷制热模式
     mode:
@@ -63,7 +63,7 @@ angular.module('EMAPP').directive('controlMode', ["$api", function($api) {
     return {
         restrict: 'A',
         scope: {},
-        template: function() {
+        template: function () {
             return [
                 '<a href="javascript:void(0)" class="btn btn-sm btn-primary" ng-class="{active:current===1}" ng-click="mode(1)"><i class="emweb web-snow"></i>制冷</a>',
                 '<a href="javascript:void(0)" class="btn btn-sm btn-primary" ng-class="{active:current===2}" ng-click="mode(2)"><i class="emweb web-sun"></i>制热</a>',
@@ -71,16 +71,16 @@ angular.module('EMAPP').directive('controlMode', ["$api", function($api) {
                 '<a href="javascript:void(0)" class="btn btn-sm btn-primary" ng-class="{active:current===4}" ng-click="mode(4)"><i class="emweb web-ventilation"></i>通风</a>'
             ].join('');
         },
-        link: function(scope, element, attrs, ctrl) {
+        link: function (scope, element, attrs, ctrl) {
             if (!angular.isUndefined(attrs.command)) {
-                scope.$watch(attrs.command, function() {
+                scope.$watch(attrs.command, function () {
                     scope.current = {
                         'EMC_COOLING': 1,
                         'EMC_HEATING': 2,
                         'EMC_DEHUMIDIFYING': 3,
                         'EMC_VERTILATING': 4
                     }[attrs.status] || 0;
-                    scope.mode = function(number) {
+                    scope.mode = function (number) {
                         scope.current = number;
                         $api.control.send({
                             id: attrs.sensorid,
@@ -101,7 +101,7 @@ angular.module('EMAPP').directive('controlMode', ["$api", function($api) {
     };
 }]);
 
-angular.module('EMAPP').directive('controlSpeed', ["$api", function($api) {
+angular.module('EMAPP').directive('controlSpeed', ["$api", function ($api) {
     //<i class="emweb web-speed-auto"></i>
     /*
     EMC_WINDSPEED: 风速
@@ -114,18 +114,18 @@ angular.module('EMAPP').directive('controlSpeed', ["$api", function($api) {
     return {
         restrict: 'A',
         scope: {},
-        template: function() {
+        template: function () {
             return [
                 '<i class="emweb web-speed-three" ng-class="{active:current===3}" ng-click="speed(3)"></i>',
                 '<i class="emweb web-speed-four" ng-class="{active:current===4}" ng-click="speed(4)"></i>',
                 '<i class="emweb web-speed-five" ng-class="{active:current===5}" ng-click="speed(5)"></i>'
             ].join('');
         },
-        link: function(scope, element, attrs, ctrl) {
+        link: function (scope, element, attrs, ctrl) {
             if (!angular.isUndefined(attrs.command)) {
-                scope.$watch(attrs.command, function() {
+                scope.$watch(attrs.command, function () {
                     scope.current = 0;
-                    scope.speed = function(number) {
+                    scope.speed = function (number) {
                         scope.current = number;
                         $api.control.send({
                             id: attrs.sensorid,
@@ -145,20 +145,20 @@ angular.module('EMAPP').directive('controlSpeed', ["$api", function($api) {
     };
 }]);
 
-angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAlert", function($api, $timeout, SweetAlert) {
+angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAlert", function ($api, $timeout, SweetAlert) {
     return {
         restrict: 'A',
-        link: function(scope, element, attrs, ctrl) {
+        link: function (scope, element, attrs, ctrl) {
             if (!angular.isUndefined(attrs.ngChecked)) {
                 element.bootstrapSwitch('disabled', true);
-                scope.$watch(attrs.ngChecked, function(enable) {
-                    $timeout(function(bool) {
+                scope.$watch(attrs.ngChecked, function (enable) {
+                    $timeout(function (bool) {
                         bool = true;
                         attrs.command && element
                             .bootstrapSwitch('disabled', false)
                             .bootstrapSwitch('state', enable)
-                            .on('switchChange.bootstrapSwitch', function(event, state) {
-                                $timeout(function() {
+                            .on('switchChange.bootstrapSwitch', function (event, state) {
+                                $timeout(function () {
                                     if (attrs.command === 'EMC_SWITCH') {
                                         bool && SweetAlert.swal({
                                             title: '控制校验',
@@ -171,12 +171,12 @@ angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAl
                                             showLoaderOnConfirm: true,
                                             cancelButtonText: '取消',
                                             confirmButtonText: '确定'
-                                        }, function(inputValue) {
+                                        }, function (inputValue) {
 
                                             if (inputValue === false) {
                                                 bool = false;
                                                 element.bootstrapSwitch('toggleState');
-                                                $timeout(function() {
+                                                $timeout(function () {
                                                     bool = true;
                                                 });
                                                 return false;
@@ -194,7 +194,7 @@ angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAl
                                                     mode: state ? attrs.onValue : attrs.offValue
                                                 },
                                                 ctrlcode: (new Hashes.SHA1).hex(inputValue).toUpperCase()
-                                            }, function(data) {
+                                            }, function (data) {
                                                 if (data.code === 0) {
                                                     SweetAlert.success('操作成功！');
                                                 } else {
@@ -203,10 +203,10 @@ angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAl
                                                         text: '',
                                                         type: 'error',
                                                         confirmButtonText: '关闭'
-                                                    }, function() {
+                                                    }, function () {
                                                         bool = false;
                                                         element.bootstrapSwitch('toggleState');
-                                                        $timeout(function() {
+                                                        $timeout(function () {
                                                             bool = true;
                                                         });
                                                     });

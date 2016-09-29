@@ -26,7 +26,7 @@ angular.module('EMAPP').constant('APICONFIG', {
         //节能星级
         projectdetail: {},
 
-        //////监控//////
+        //////监控，控制//////
         //监控数据
         monitor: {},
         //曲线数据
@@ -75,7 +75,10 @@ angular.module('EMAPP').constant('APICONFIG', {
     }],
     //传感器
     control: ['control', , {
-        send: {}
+        // 发送命令
+        send: {},
+        // 命令透传
+        through: {}
     }],
     //设备接口
     device: ['device', , {
