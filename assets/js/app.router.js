@@ -75,7 +75,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         }
     }).state('dashboard.control', {
         url: '/control',
-        templateUrl: 'assets/html/project/control.html?rev=782398f93a',
+        templateUrl: 'assets/html/project/control.html?rev=58bd1dd1b9',
         controller: 'project.control',
         controllerAs: 'self',
         resolve: {
@@ -83,7 +83,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=6f54248211',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=c32067efc9',
+                    'assets/js/controllers/project/control.min.js?rev=9f6dc362d2',
                     'assets/js/directives/project/control.min.js?rev=d3db494594',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
