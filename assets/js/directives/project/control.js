@@ -12,40 +12,32 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
             ].join('');
         },
         link: function (scope, element, attrs, ctrl) {
-            if (!angular.isUndefined(attrs.command)) {
-                scope.$watch(attrs.command, function () {
-                    var timer = null,
-                        options = angular.extend({
-                            min: 1,
-                            max: 10,
-                            value: 5,
-                            orientation: 'horizontal',
-                            range: 'min',
-                            slide: function (event, ui) {
-                                if (scope.value !== ui.value) {
-                                    timer && $timeout.cancel(timer);
-                                    timer = $timeout(function () {
-                                        $api.control.send({
-                                            id: attrs.sensorid,
-                                            command: attrs.command,
-                                            param: {
-                                                value: ui.value + 15
-                                            }
-                                        });
-                                    }, 500);
-                                    $timeout(function () {
-                                        scope.value = ui.value;
-                                    });
+            angular.isDefined(attrs.command) && scope.$watch(attrs.command, function () {
+                var options = angular.extend({
+                    min: 1,
+                    max: 10,
+                    value: 5,
+                    orientation: 'horizontal',
+                    range: 'min',
+                    change: function (event, ui) {
+                        scope.value !== ui.value && $timeout(function () {
+                            scope.value = ui.value;
+                            $api.control.send({
+                                id: attrs.sensorid,
+                                command: attrs.command,
+                                param: {
+                                    value: ui.value + 15
                                 }
-                            }
-                        }, element.data());
-                    if (options.value > options.max) {
-                        options.value = Math.ceil(options.value % options.max);
+                            });
+                        });
                     }
-                    scope.value = options.value;
-                    element.children('.ui-slider').slider(options);
-                });
-            }
+                }, element.data());
+                if (options.value > options.max) {
+                    options.value = Math.ceil(options.value % options.max);
+                }
+                scope.value = options.value;
+                element.children('.ui-slider').slider(options);
+            });
         }
     };
 }]);

@@ -84,7 +84,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/control.min.css?rev=6f54248211',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
                     'assets/js/controllers/project/control.min.js?rev=9f6dc362d2',
-                    'assets/js/directives/project/control.min.js?rev=d3db494594',
+                    'assets/js/directives/project/control.min.js?rev=4b3b38bae1',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
                     'assets/js/directives/customer.min.js?rev=ab552a2840'
