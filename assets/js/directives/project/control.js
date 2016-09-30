@@ -75,10 +75,10 @@ angular.module('EMAPP').directive('controlMode', ["$api", function ($api) {
             if (!angular.isUndefined(attrs.command)) {
                 scope.$watch(attrs.command, function () {
                     scope.current = {
-                        'EMC_COOLING': 1,
-                        'EMC_HEATING': 2,
-                        'EMC_DEHUMIDIFYING': 3,
-                        'EMC_VERTILATING': 4
+                        EMC_COOLING: 1,
+                        EMC_HEATING: 2,
+                        EMC_DEHUMIDIFYING: 3,
+                        EMC_VERTILATING: 4
                     }[attrs.status] || 0;
                     scope.mode = function (number) {
                         scope.current = number;
@@ -116,15 +116,19 @@ angular.module('EMAPP').directive('controlSpeed', ["$api", function ($api) {
         scope: {},
         template: function () {
             return [
-                '<i class="emweb web-speed-three" ng-class="{active:current===3}" ng-click="speed(3)"></i>',
-                '<i class="emweb web-speed-four" ng-class="{active:current===4}" ng-click="speed(4)"></i>',
-                '<i class="emweb web-speed-five" ng-class="{active:current===5}" ng-click="speed(5)"></i>'
+                '<i class="emweb web-speed-three" ng-class="{active:current===1}" ng-click="speed(1)"></i>',
+                '<i class="emweb web-speed-four" ng-class="{active:current===2}" ng-click="speed(2)"></i>',
+                '<i class="emweb web-speed-five" ng-class="{active:current===3}" ng-click="speed(3)"></i>'
             ].join('');
         },
         link: function (scope, element, attrs, ctrl) {
             if (!angular.isUndefined(attrs.command)) {
                 scope.$watch(attrs.command, function () {
-                    scope.current = 0;
+                    scope.current = {
+                        EMC_LOW: 1,
+                        EMC_MEDIUM: 2,
+                        EMC_HIGH: 3
+                    }[attrs.status] || 0;
                     scope.speed = function (number) {
                         scope.current = number;
                         $api.control.send({
@@ -132,9 +136,9 @@ angular.module('EMAPP').directive('controlSpeed', ["$api", function ($api) {
                             command: attrs.command,
                             param: {
                                 mode: {
-                                    3: 'EMC_LOW',
-                                    4: 'EMC_MEDIUM',
-                                    5: 'EMC_HIGH'
+                                    1: 'EMC_LOW',
+                                    2: 'EMC_MEDIUM',
+                                    3: 'EMC_HIGH'
                                 }[number]
                             }
                         });
