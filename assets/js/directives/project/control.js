@@ -7,7 +7,7 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
                 '<div class="ui-slider"></div>',
                 '<div class="text-left" style="min-width:200px;line-height:24px;">',
                 '<span class="text-muted">范围：16 ~ 30<i class="emweb web-degree"></i></span>&nbsp;&nbsp;',
-                '<span class="text-primary">当前：{{value+15}}<i class="emweb web-degree"></i></span>',
+                '<span class="text-primary">设定：{{value+15}}<i class="emweb web-degree"></i></span>',
                 '</div>'
             ].join('');
         },
@@ -20,8 +20,8 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
                     orientation: 'horizontal',
                     range: 'min',
                     change: function (event, ui) {
-                        scope.value !== ui.value && $timeout(function () {
-                            scope.value = ui.value;
+                        if (options.value !== ui.value) {
+                            options.value = ui.value;
                             $api.control.send({
                                 id: attrs.sensorid,
                                 command: attrs.command,
@@ -29,6 +29,11 @@ angular.module('EMAPP').directive('controlSlider', ["$api", "$timeout", function
                                     value: ui.value + 15
                                 }
                             });
+                        }
+                    },
+                    slide: function (event, ui) {
+                        $timeout(function () {
+                            scope.value = ui.value;
                         });
                     }
                 }, element.data());
