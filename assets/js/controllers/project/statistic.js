@@ -166,33 +166,11 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     width: '*',
                     minWidth: 260
                 }, {
-                    displayName: '设备ID',
-                    name: 'id.substr(12,12)',
-                    type: 'number',
-                    width: '*',
-                    minWidth: 120
-                }, {
-                    //     displayName: '设备编号',
-                    //     name: 'gatewayid',
-                    //     width: '*',
-                    //     minWidth: 100
-                    // }, {
-                    displayName: '设备编码',
-                    name: 'tag',
-                    width: '*',
-                    minWidth: 160,
-                    enableColumnMenu: false
-                }, {
-                    displayName: '能耗分类',
-                    name: 'energy',
-                    width: '*',
-                    minWidth: 100
-                }, {
                     displayName: moment(self.startDate).format('YYYY年M月D日'),
                     name: 'min',
                     type: 'number',
                     width: '*',
-                    minWidth: 120,
+                    minWidth: 80,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
@@ -200,7 +178,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     name: 'max',
                     type: 'number',
                     width: '*',
-                    minWidth: 120,
+                    minWidth: 80,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
@@ -252,35 +230,13 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     displayName: '传感器名称',
                     name: 'name',
                     width: '*',
-                    minWidth: 260
-                }, {
-                    displayName: '设备ID',
-                    type: "number",
-                    name: 'channeldid.substr(12,12)',
-                    width: '*',
-                    minWidth: 120
-                }, {
-                    //     displayName: '设备编号',
-                    //     name: 'gatewayid',
-                    //     width: '*',
-                    //     minWidth: 100
-                    // }, {
-                    displayName: '设备编码',
-                    name: 'tag',
-                    width: '*',
-                    minWidth: 160,
-                    enableColumnMenu: false
-                }, {
-                    displayName: '能耗分类',
-                    name: 'energy',
-                    width: '*',
-                    minWidth: 100
+                    minWidth: 180
                 }, {
                     displayName: '月能耗',
                     type: "number",
                     name: 'monthlySum',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 70,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }, {
@@ -288,7 +244,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     type: "number",
                     name: 'dailyAvg',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 70,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }];
@@ -310,35 +266,13 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     displayName: '传感器名称',
                     name: 'name',
                     width: '*',
-                    minWidth: 260
-                }, {
-                    displayName: '设备ID',
-                    type: "number",
-                    name: 'channeldid.substr(12,12)',
-                    width: '*',
-                    minWidth: 120
-                }, {
-                    //     displayName: '设备编号',
-                    //     name: 'gatewayid',
-                    //     width: '*',
-                    //     minWidth: 100
-                    // }, {
-                    displayName: '设备编码',
-                    name: 'tag',
-                    width: '*',
-                    minWidth: 160,
-                    enableColumnMenu: false
-                }, {
-                    displayName: '能耗分类',
-                    name: 'energy',
-                    width: '*',
-                    minWidth: 100
+                    minWidth: 200
                 }, {
                     displayName: '日能耗',
                     type: "number",
                     name: 'dailysum',
                     width: '*',
-                    minWidth: 100,
+                    minWidth: 70,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right'
                 }];
@@ -398,26 +332,71 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
         }
 
         $api.business[tabKey](data, function(data) {
-
             switch (tabKey) {
                 case 'settlereport':
                     data = data.result[projectId] || {};
                     self.statistic = data.statistic || {};
                     data = data.detail || [];
+                    self.gridOptions.columnDefs.push({
+                        displayName: '设备ID',
+                        name: 'id.substr(12,12)',
+                        type: 'number',
+                        width: '*',
+                        minWidth: 120
+                    }, {
+                        //     displayName: '设备编号',
+                        //     name: 'gatewayid',
+                        //     width: '*',
+                        //     minWidth: 100
+                        // }, {
+                        displayName: '设备编码',
+                        name: 'tag',
+                        width: '*',
+                        minWidth: 160,
+                        enableColumnMenu: false
+                    }, {
+                        displayName: '能耗分类',
+                        name: 'energy',
+                        width: '*',
+                        minWidth: 100
+                    });
                     break;
                 case 'monthlyreport':
                     data = data.result[projectId] || [];
                     if (data.length) {
                         angular.forEach(data[0].usage, function(val, key) {
                             this.push({
-                                displayName: $filter('date')(key, 'yyyy年M月d日'),
+                                displayName: $filter('date')(key, 'M-d'),
                                 name: 'day' + $filter('date')(key, 'yyyyMMdd'),
                                 width: '*',
-                                minWidth: 120,
+                                minWidth: 60,
                                 headerCellClass: 'text-right',
                                 cellClass: 'text-right'
                             })
                         }, self.gridOptions.columnDefs);
+                        self.gridOptions.columnDefs.push({
+                            displayName: '设备ID',
+                            type: "number",
+                            name: 'channeldid.substr(12,12)',
+                            width: '*',
+                            minWidth: 120
+                        }, {
+                            //     displayName: '设备编号',
+                            //     name: 'gatewayid',
+                            //     width: '*',
+                            //     minWidth: 100
+                            // }, {
+                            displayName: '设备编码',
+                            name: 'tag',
+                            width: '*',
+                            minWidth: 160,
+                            enableColumnMenu: false
+                        }, {
+                            displayName: '能耗分类',
+                            name: 'energy',
+                            width: '*',
+                            minWidth: 100
+                        });
                     }
                     break;
                 case 'dailyreport':
@@ -429,12 +408,35 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                                 displayName: key + '时',
                                 name: 'hour' + key,
                                 width: '*',
-                                minWidth: 100,
+                                minWidth: 50,
                                 headerCellClass: 'text-right',
                                 cellClass: 'text-right'
                             });
                         }, self.gridOptions.columnDefs);
                     }
+                    self.gridOptions.columnDefs.push({
+                        displayName: '设备ID',
+                        type: "number",
+                        name: 'channeldid.substr(12,12)',
+                        width: '*',
+                        minWidth: 120
+                    }, {
+                        //     displayName: '设备编号',
+                        //     name: 'gatewayid',
+                        //     width: '*',
+                        //     minWidth: 100
+                        // }, {
+                        displayName: '设备编码',
+                        name: 'tag',
+                        width: '*',
+                        minWidth: 160,
+                        enableColumnMenu: false
+                    }, {
+                        displayName: '能耗分类',
+                        name: 'energy',
+                        width: '*',
+                        minWidth: 100
+                    });
                     break;
                 case 'projectreport':
                     angular.forEach(data.result, function(items) {
