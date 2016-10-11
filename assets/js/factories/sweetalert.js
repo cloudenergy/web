@@ -1,20 +1,23 @@
 /*  sweetalert  */
-angular.module('EMAPP').factory('SweetAlert', function() {
+angular.module('EMAPP').factory('SweetAlert', function () {
     return {
-        swal: function() {
-            return (window.swal || angular.noop).apply(window.swal || this, arguments);
+        swal: function () {
+            return window.swal.apply(window.swal, arguments);
         },
-        success: function(title, message) {
+        success: function (title, message) {
             return this.swal(title, message, 'success');
         },
-        error: function(title, message) {
+        error: function (title, message) {
             return this.swal(title, message, 'error');
         },
-        warning: function(title, message) {
+        warning: function (title, message) {
             return this.swal(title, message, 'warning');
         },
-        info: function(title, message) {
+        info: function (title, message) {
             return this.swal(title, message, 'info');
+        },
+        close: function () {
+            return window.swal.close();
         }
     };
 });

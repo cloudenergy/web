@@ -1,19 +1,15 @@
-EMAPP.templateCache.put('assets/html/project/financial/view.html?rev=54c02b78aa', '<div class="app-view-project-statistic"><div financial-main></div><div class="modal fade" id="financialModal" ng-if="self.tabActive!==\'deficit\'&&self.modalForm" financial-modal><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span>&times;</span></button><h4 class="modal-title" ng-bind="self.modal.departmentname||self.modal.title||\'&nbsp;\'"></h4></div><div class="modal-body" ng-include="\'assets/html/project/financial/main.html?rev=353ca07394\'"></div></div></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/financial/main.html?rev=353ca07394', '<ul class="nav nav-tabs"><li ng-if="self.modal" class="active"><a href="javascript:void(0)" ng-bind="self.modal.modaltitle"></a></li><li ng-if="!self.modal" ng-repeat="(key,name) in self.tabs" ng-class="{active:self.tabActive===key}"><a ui-sref="{tab:key}" ng-bind="name"></a></li><li class="pull-right form-inline"><div class="tool-group" ng-if="self.tabActive===\'nearest\'||self.tabActive===\'usage\'" ng-include="\'assets/html/project/financial/tool.html?rev=0e915d2e1d\'"></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.filter()">筛选<i class="emweb web-filter"></i></button></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.export()">导出<i class="emweb web-export-excel"></i></button></div></li></ul><div class="tab-content"><div class="tab-pane subContent active" auto-height="self.autoHeight" ui-i18n="\'zh-cn\'"><div ui-grid="self.gridOptions" class="grid" ui-grid-auto-resize ui-grid-exporter ui-grid-move-columns ui-grid-resize-columns ui-grid-infinite-scroll></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d', '<div class="form-group form-group-sm has-feedback date"><input type="text" class="form-control" ng-model="self.fromDate" datetimepicker="{maxRangeTo:\'#\'+self.toDate_ID,rangeDay:30}" id="{{self.fromDate_ID}}"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group">至</div><div class="form-group form-group-sm has-feedback date"><input type="text" class="form-control" ng-model="self.toDate" datetimepicker="{minRangeTo:\'#\'+self.fromDate_ID,rangeDay:30,useCurrent:false}" id="{{self.toDate_ID}}"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-if="self.tabActive===\'nearest\'"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="self.manual.selected.title||\'所有充值\'">所有充值</span> <span class="caret"></span></button><ul class="dropdown-menu"><li ng-repeat="item in self.manual" ng-class="{active:self.manual.selected.id===item.id}" ng-click="self.manual.selected=item;"><a href="javascript:void(0)" ng-bind="item.title"></a></li></ul></div></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-success" ng-click="self.tabList();"><i class="emweb web-search"></i> 查询</button></div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group-sm">&nbsp;</div>');
+(function (controllerFn) {
 
-(function(controllerFn) {
-
-    angular.module('EMAPP').controller('project.financial', ["$stateParams", "$scope", "$q", "$api", "$filter", "$timeout", "uiGridConstants", "uuid", function($stateParams, $scope, $q, $api, $filter, $timeout, uiGridConstants, uuid) {
+    angular.module('EMAPP').controller('project.financial', ["$templateCache", "$stateParams", "$scope", "$q", "$api", "$filter", "$timeout", "uiGridConstants", "uuid", function ($templateCache, $stateParams, $scope, $q, $api, $filter, $timeout, uiGridConstants, uuid) {
         controllerFn.apply(this, arguments);
     }]);
 
-    angular.module('EMAPP').controller('project.financial.modal', ["$stateParams", "$scope", "$q", "$api", "$filter", "$timeout", "uiGridConstants", "uuid", function($stateParams, $scope, $q, $api, $filter, $timeout, uiGridConstants, uuid) {
+    angular.module('EMAPP').controller('project.financial.modal', ["$templateCache", "$stateParams", "$scope", "$q", "$api", "$filter", "$timeout", "uiGridConstants", "uuid", function ($templateCache, $stateParams, $scope, $q, $api, $filter, $timeout, uiGridConstants, uuid) {
         arguments[0].modal = true;
         controllerFn.apply(this, arguments);
     }]);
 
-}(function($stateParams, $scope, $q, $api, $filter, $timeout, uiGridConstants, uuid) {
+}(function ($templateCache, $stateParams, $scope, $q, $api, $filter, $timeout, uiGridConstants, uuid) {
 
     var self = this,
         nowDate = new Date();
@@ -76,18 +72,18 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
         title: '支付完成'
     }];
     self.status.selected = self.status[0];
-    angular.forEach(self.status, function(item) {
+    angular.forEach(self.status, function (item) {
         this[item.key] = item.title;
     }, self.status);
 
     //筛选
-    self.filter = function() {
+    self.filter = function () {
         self.gridOptions.enableFiltering = !self.gridOptions.enableFiltering;
         self.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
     };
 
     //导出
-    self.export = function() {
+    self.export = function () {
         var name = $filter('date')(new Date(), 'yyyyMMdd_HHmmss');
         if (self.tabActive === 'nearest') {
             name = [
@@ -101,36 +97,36 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
     //toolbar - end
 
     //催缴欠费
-    self.reminder = function(entity) {
+    self.reminder = function (entity) {
         $api.message.remindrecharge({
             uid: entity.departmentaccount,
             project: EMAPP.Project.current._id
-        }, function() {
+        }, function () {
             entity.remindercount += 1;
         });
     };
 
-    self.openModel = function(entity, tab, title) {
+    self.openModel = function (entity, tab, title) {
         self.modalForm = entity;
         self.modalForm.tab = tab;
         self.modalForm.modaltitle = title;
     };
 
     self.gridOptions = {
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
 
-            gridApi.infiniteScroll.on.needLoadMoreData($scope, function() {
+            gridApi.infiniteScroll.on.needLoadMoreData($scope, function () {
                 var defer = $q.defer(),
-                    resolve = function() {
+                    resolve = function () {
                         defer.resolve();
                     },
-                    reject = function() {
+                    reject = function () {
                         gridApi.infiniteScroll.dataLoaded();
                         defer.reject();
                     };
-                (function(promise) {
+                (function (promise) {
                     if (promise) {
-                        promise.then(function() {
+                        promise.then(function () {
                             gridApi.infiniteScroll.saveScrollPercentage();
                             gridApi.infiniteScroll.dataLoaded(false, true).then(resolve, reject);
                         }, reject);
@@ -148,7 +144,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
         infiniteScrollDown: true,
         enableColumnResizing: true,
         exporterOlderExcelCompatibility: true,
-        exporterHeaderFilter: function(displayName) {
+        exporterHeaderFilter: function (displayName) {
             if (displayName === '充值金额(元)') {
                 return displayName + '(合计：' + self.statistic.sumOfAmount + ')';
             }
@@ -160,7 +156,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
             }
             return displayName;
         },
-        exporterFieldCallback: function(grid, row, col, value) {
+        exporterFieldCallback: function (grid, row, col, value) {
             return {
                 title: true,
                 account: true,
@@ -176,7 +172,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
     };
 
     self.load = {
-        nearest: function(loadMore) {
+        nearest: function (loadMore) {
             if (loadMore && self.gridOptions.paging && self.gridOptions.paging.count <= (self.gridOptions.paging.pageindex * self.gridOptions.paging.pagesize)) return;
             return $api.business.recentchargelog({
                 from: self.fromDate.replace(/-/g, ''),
@@ -189,9 +185,9 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                     ismanual: self.manual.selected.val,
                     department: self.modal ? self.modal.departmentaccount || self.modal.account : undefined
                 }]
-            }, function(data) {
+            }, function (data) {
                 data = data.result[EMAPP.Project.current._id] || {};
-                angular.forEach(data.detail, function(item) {
+                angular.forEach(data.detail, function (item) {
                     item.status = self.status[item.status] || item.status;
                     item.timepaid = item.timepaid && $filter('date')(item.timepaid * 1000, 'yyyy年M月dd日 H:mm:ss') || '';
                     item.timecreate = item.timecreate && $filter('date')(item.timecreate * 1000, 'yyyy年M月dd日 H:mm:ss') || '';
@@ -200,7 +196,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                     self.gridOptions.data = self.gridOptions.data.concat(data.detail || []);
                 } else {
                     self.gridOptions.data = data.detail || [];
-                    self.gridOptions.data.length && $timeout(function() {
+                    self.gridOptions.data.length && $timeout(function () {
                         self.gridApi.core.scrollTo(self.gridOptions.data[0], self.gridOptions.columnDefs[0]);
                     });
                 }
@@ -209,29 +205,29 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                 return data;
             }).$promise;
         },
-        deficit: function(loadMore) {
+        deficit: function (loadMore) {
             return self.load.departments(loadMore);
         },
-        all: function(loadMore) {
+        all: function (loadMore) {
             return self.load.departments(loadMore);
         },
-        departments: function(loadMore) {
+        departments: function (loadMore) {
             if (loadMore && self.gridOptions.paging && self.gridOptions.paging.count <= (self.gridOptions.paging.pageindex * self.gridOptions.paging.pagesize)) return;
             return $api.business.departments({
                 project: EMAPP.Project.current._id,
                 amount: self.tabActive === 'all' ? undefined : 0,
                 pageindex: (loadMore && self.gridOptions.paging ? self.gridOptions.paging.pageindex : 0) + 1,
                 pagesize: 50
-            }, function(data) {
+            }, function (data) {
                 data = data.result[EMAPP.Project.current._id] || {};
-                angular.forEach(data.detail, function(item) {
+                angular.forEach(data.detail, function (item) {
                     item.arrearagetime = item.arrearagetime && $filter('date')(item.arrearagetime * 1000, 'yyyy年M月dd日 H:mm:ss') || '';
                 });
                 if (loadMore) {
                     self.gridOptions.data = self.gridOptions.data.concat(data.detail || []);
                 } else {
                     self.gridOptions.data = data.detail || [];
-                    self.gridOptions.data.length && $timeout(function() {
+                    self.gridOptions.data.length && $timeout(function () {
                         self.gridApi.core.scrollTo(self.gridOptions.data[0], self.gridOptions.columnDefs[0]);
                     });
                 }
@@ -240,7 +236,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                 return data;
             }).$promise;
         },
-        usage: function(loadMore) {
+        usage: function (loadMore) {
             if (loadMore && self.gridOptions.paging && self.gridOptions.paging.count <= (self.gridOptions.paging.pageindex * self.gridOptions.paging.pagesize)) return;
             return $api.business.departmentusage({
                 from: self.fromDate.replace(/-/g, ''),
@@ -251,17 +247,17 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                     id: EMAPP.Project.current._id,
                     account: self.modal ? self.modal.departmentaccount || self.modal.account : undefined
                 }]
-            }, function(data) {
+            }, function (data) {
                 data = data.result[EMAPP.Project.current._id] || {};
                 if (loadMore) {
                     self.gridOptions.data = self.gridOptions.data.concat(data.detail || []);
                 } else {
                     self.gridOptions.data = data.detail || [];
-                    self.gridOptions.data.length && $timeout(function() {
+                    self.gridOptions.data.length && $timeout(function () {
                         self.gridApi.core.scrollTo(self.gridOptions.data[0], self.gridOptions.columnDefs[0]);
                     });
                 }
-                angular.forEach(self.gridOptions.data, function(item) {
+                angular.forEach(self.gridOptions.data, function (item) {
                     item.timepoint = item.timepoint && $filter('date')(item.timepoint * 1000, 'yyyy年M月dd日 H:mm:ss') || '';
                 });
                 self.gridOptions.paging = data.paging;
@@ -270,8 +266,8 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
         }
     };
 
-    self.tabList = function() {
-        var headerCellTemplate = EMAPP.templateCache.get('ui-grid/uiGridHeaderCell');
+    self.tabList = function () {
+        var headerCellTemplate = $templateCache.get('ui-grid/uiGridHeaderCell');
         switch (self.tabActive) {
             case 'nearest':
                 self.gridOptions.columnDefs = [{
@@ -316,7 +312,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                     type: 'number',
                     width: '*',
                     minWidth: 200,
-                    headerCellTemplate: function() {
+                    headerCellTemplate: function () {
                         return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sumOfAmount}}</div></div><div role="button" tabindex="0"');
                     }
                 }, {
@@ -403,7 +399,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                     name: 'amount',
                     width: '*',
                     minWidth: 200,
-                    headerCellTemplate: function() {
+                    headerCellTemplate: function () {
                         return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sumOfArrears}}</div></div><div role="button" tabindex="0"');
                     }
                 }, {
@@ -472,7 +468,7 @@ EMAPP.templateCache.put('assets/html/project/financial/tool.html?rev=0e915d2e1d'
                     name: 'amount',
                     width: '*',
                     minWidth: 200,
-                    headerCellTemplate: function() {
+                    headerCellTemplate: function () {
                         return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sumOfBalance}}</div></div><div role="button" tabindex="0"');
                     }
                 }, {

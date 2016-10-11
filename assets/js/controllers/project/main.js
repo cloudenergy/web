@@ -1,13 +1,4 @@
-EMAPP.templateCache.put('assets/html/project/main/view.html?rev=4f6956cb6f', '<div class="app-view-project-main ng-cloak"><div class="row"><div class="col-sm-7"><div class="row"><div class="panel-heading"><span class="subTitle">能耗日历</span></div><div class="panel-body"><div class="subContent clearfix"><div class="col-sm-5" ng-include="\'assets/html/project/main/calendar.html?rev=649f4c1915\'"></div><div class="col-sm-7" ng-include="\'assets/html/project/main/dailycost.html?rev=e296b0ee7d\'"></div></div></div></div></div><div class="col-sm-5 content-right"><div class="row"><div class="panel-heading"><span class="subTitle">总能耗</span></div><div class="panel-body"><div class="subContent clearfix" ng-include="\'assets/html/project/main/monthlykgce.html?rev=e1c07d83f7\'"></div></div></div></div></div><div class="rate-content clearfix"><div ng-if="!self.groupmode" class="col-sm-7" ng-include="\'assets/html/project/main/energyconstitute.html?rev=6fc369f313\'"></div><div ng-if="!self.groupmode" class="col-sm-5 content-right" ng-include="\'assets/html/project/main/dailysensordetail.html?rev=d8d0375147\'"></div><div ng-if="self.groupmode" class="col-sm-7" ng-include="\'assets/html/project/main/energyeffectiverate.html?rev=99193f85ff\'"></div><div ng-if="self.groupmode" class="col-sm-5 content-right" ng-include="\'assets/html/project/main/projectdetail.html?rev=9090093f34\'"></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/calendar.html?rev=649f4c1915', '<div class="datetimepicker-component"><div class="datetimepicker-panel"><i></i><datetimepicker data-format="YYYY/MM/DD" data-inline="true"></datetimepicker></div><div class="datetimepicker-comment text-center clearfix"><div class="col-sm-4"><div class="row"><i class="emstatus-down"></i> 能耗下降</div></div><div class="col-sm-4"><div class="row"><i class="emstatus-up"></i> 能耗上升</div></div><div class="col-sm-4"><div class="row"><i class="emstatus-keep"></i> 能耗持平</div></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/dailycost.html?rev=e296b0ee7d', '<div class="row highcharts-component" ng-if="self.chart.dailycost"><div class="highcharts-today text-center">{{self.viewDate|date:\'yyyy-MM-dd\'}}</div><highcharts class="highcharts-panel text-center" config="self.chart.dailycost"></highcharts><div class="highcharts-comment row text-center"><div class="col-sm-6"><div class="row"><div class="unitAreaTitle">环比费用</div><div class="unitAreaCounting">{{self.currentDayqoq}} <span class="unitAreaUnit">%</span></div></div></div><div class="col-sm-6"><div class="row"><div class="unitAreaTitle">同比费用</div><div class="unitAreaCounting">{{self.currentDayyoy}} <span class="unitAreaUnit">%</span></div></div></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/monthlykgce.html?rev=e1c07d83f7', '<div class="highcharts-component" ng-if="self.chart.monthlykgce"><div class="highcharts-today text-center">{{self.viewDate|date:\'yyyy-MM\'}}</div><highcharts class="highcharts-panel text-center" config="self.chart.monthlykgce"></highcharts><div class="highcharts-comment row text-center"><div class="col-sm-6"><div class="row"><div class="unitAreaTitle">单位面积能耗</div><div class="unitAreaCounting">{{self.currentMonthKgceperunitarea}} <span class="unitAreaUnit">kgce/m2</span></div></div></div><div class="col-sm-6"><div class="row"><div class="unitAreaTitle">单位面积电耗</div><div class="unitAreaCounting">{{self.currentMonthKwhperunitarea}} <span class="unitAreaUnit">kWh/m2</span></div></div></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/energyconstitute.html?rev=6fc369f313', '<div class="row"><div class="panel-heading"><span class="subTitle">水电气构成{{self.viewDate|date:\'（yyyy-MM）\'}}</span></div><div class="panel-body"><div class="subContent clearfix"><highcharts class="highcharts-panel highcharts-line text-center" config="self.chart.energyconstitute"></highcharts></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/dailysensordetail.html?rev=d8d0375147', '<div class="row"><div class="panel-heading"><span class="subTitle">能耗细分</span></div><div class="panel-body"><div class="subContent clearfix"><highcharts class="highcharts-panel highcharts-pie text-center" config="self.chart.dailysensordetail"></highcharts></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/energyeffectiverate.html?rev=99193f85ff', '<div class="row"><div class="panel-heading"><span class="subTitle">能效比{{self.viewDate|date:\'（yyyy-MM）\'}}</span></div><div class="panel-body"><div class="subContent clearfix"><highcharts class="highcharts-panel highcharts-line text-center" config="self.chart.energyeffectiverate"></highcharts></div></div></div>');
-EMAPP.templateCache.put('assets/html/project/main/projectdetail.html?rev=9090093f34', '<div class="row"><div class="panel-heading"><span class="subTitle">节能星级</span></div><div class="panel-body"><div class="subContent clearfix"><highcharts class="highcharts-panel highcharts-pie text-center" config="self.chart.projectdetail"></highcharts></div></div></div>');
-
-angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout", function($api, $filter, $timeout) {
+angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout", function ($api, $filter, $timeout) {
 
     var self = this;
 
@@ -16,12 +7,12 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     self.groupmode = EMAPP.User.groupmode;
 
     //绑定日历
-    $timeout(function(element) {
-        element = $('datetimepicker').bind('dp.show', function() {
-            $timeout(function() {
+    $timeout(function (element) {
+        element = $('datetimepicker').bind('dp.show', function () {
+            $timeout(function () {
                 element.data('DateTimePicker').maxDate(new Date());
             });
-        }).bind('dp.change', function(event) {
+        }).bind('dp.change', function (event) {
             var sameMonth = angular.equals(event.date.format('YYYYMM'), $filter('date')(self.viewDate, 'yyyyMM')),
                 sameDate = angular.equals(event.date.format('YYYYMMDD'), $filter('date')(self.viewDate, 'yyyyMMdd'));
             if (!sameDate) {
@@ -35,7 +26,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
             !sameMonth && !self.groupmode && self.dailysensordetail(self.viewDate);
             !sameMonth && self.groupmode && self.energyeffectiverate(self.viewDate);
             !sameMonth && self.groupmode && self.projectdetail(self.viewDate);
-        }).bind('dp.update', function(event) {
+        }).bind('dp.update', function (event) {
             if (angular.equals(event.viewDate.format('YYYYMM'), $filter('date')(self.viewDate, 'yyyyMM'))) {
                 self.bindTD();
             } else {
@@ -52,8 +43,8 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     });
 
     //绑定ID
-    self.bindTD = function() {
-        self.calendarData && $('datetimepicker .datepicker-days table tbody td.day').each(function() {
+    self.bindTD = function () {
+        self.calendarData && $('datetimepicker .datepicker-days table tbody td.day').each(function () {
             if (!/old|new/i.test(this.className)) {
                 var $this = $(this),
                     day = $this.data('day');
@@ -61,18 +52,18 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 self.calendarData.detail[day] && $this.addClass(self.calendarData.detail[day] > self.calendarData.average ? 'emstatus-up' : (self.calendarData.detail[day] < self.calendarData.average ? 'emstatus-down' : 'emstatus-keep'));
             }
         });
-        $('datetimepicker .datepicker-days table tbody td.active').click(function() {
+        $('datetimepicker .datepicker-days table tbody td.active').click(function () {
             return false;
         });
     };
 
     //日历显示
-    self.calendar = function(viewDate) {
+    self.calendar = function (viewDate) {
         $api.business.calendar({
             time: $filter('date')(viewDate, 'yyyyMM'),
             project: EMAPP.Project.ids,
             assemble: self.groupmode
-        }, function(data) {
+        }, function (data) {
             data = self.groupmode ? data.result : data.result[EMAPP.Project.current._id];
             self.calendarData = data || {};
             self.calendarData.detail = self.calendarData.detail;
@@ -81,7 +72,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
             } else {
                 self.calendarData.average = self.calendarData.buildingConsumption / (self.calendarData.detail && self.calendarData.detail.length || 0);
             }
-            angular.forEach(self.calendarData.detail, function(item, key) {
+            angular.forEach(self.calendarData.detail, function (item, key) {
                 if (self.groupmode) {
                     this[$filter('date')(key, 'yyyy-MM-dd')] = item;
                 } else {
@@ -93,12 +84,12 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     };
 
     //今日费用
-    self.dailycost = function(viewDate) {
+    self.dailycost = function (viewDate) {
         $api.business.dailycost({
             time: $filter('date')(viewDate, 'yyyyMMdd'),
             project: EMAPP.Project.ids,
             assemble: self.groupmode
-        }, function(data) {
+        }, function (data) {
 
             if (self.groupmode) {
                 data = data.result || {};
@@ -141,11 +132,11 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     };
 
     //总能耗
-    self.monthlykgce = function(viewDate) {
+    self.monthlykgce = function (viewDate) {
         $api.business.monthlykgce({
             time: $filter('date')(viewDate, 'yyyyMM'),
             project: EMAPP.Project.ids
-        }, function(data) {
+        }, function (data) {
 
             var series = [],
                 total = 0,
@@ -153,7 +144,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 kwhperunitarea = 0;
 
             if (self.groupmode) {
-                angular.forEach(data.result, function(item, key) {
+                angular.forEach(data.result, function (item, key) {
                     this.push([EMAPP.Project[key].title, item.kgce]);
                     total += item.kgce;
                     kgceperunitarea += item.kgceperunitarea;
@@ -164,7 +155,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 });
             } else {
                 data = data.result[EMAPP.Project.current._id] || {};
-                angular.forEach(data.detail, function(val, key) {
+                angular.forEach(data.detail, function (val, key) {
                     this.push([key, val]);
                 }, data.detail = []);
                 series.push({
@@ -210,7 +201,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                 legend: {
                     verticalAlign: 'middle',
                     layout: 'vertical',
-                    labelFormatter: function() {
+                    labelFormatter: function () {
                         return '<div style="text-align:left;">' + (Math.round(this.percentage * 10) / 10) + '% ' + this.name + '</div><div style="color:#BBB;text-align:left;">' + this.y + 'KGce</div>';
                     },
                     itemWidth: 100,
@@ -224,21 +215,21 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     };
 
     //水电气构成
-    self.energyconstitute = function(viewDate) {
+    self.energyconstitute = function (viewDate) {
         $api.business.energyconstitute({
             time: $filter('date')(viewDate, 'yyyyMM'),
             project: EMAPP.Project.current._id
-        }, function(data) {
+        }, function (data) {
 
             var categories = [],
                 series = [];
 
-            angular.forEach(data.result[EMAPP.Project.current._id] || {}, function(item, name, bool) {
+            angular.forEach(data.result[EMAPP.Project.current._id] || {}, function (item, name, bool) {
                 if (Object.keys(item).length > categories.length) {
                     bool = 0;
                     categories = [];
                 }
-                angular.forEach(item, function(val, key) {
+                angular.forEach(item, function (val, key) {
                     this.push(val);
                     bool === 0 && categories.push(parseInt(key));
                 }, item = []);
@@ -257,7 +248,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                     type: 'datetime',
                     categories: categories,
                     labels: {
-                        formatter: function() {
+                        formatter: function () {
                             return $filter('date')(this.value, 'M-dd');
                         }
                     }
@@ -276,17 +267,17 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     };
 
     //能耗细分
-    self.dailysensordetail = function(viewDate) {
+    self.dailysensordetail = function (viewDate) {
         $api.business.dailysensordetail({
             time: $filter('date')(viewDate, 'yyyyMM'),
             project: EMAPP.Project.current._id
-        }, function(data) {
+        }, function (data) {
 
             data = data.result[EMAPP.Project.current._id] || {};
 
             var total = 0;
 
-            angular.forEach(data, function(val, key) {
+            angular.forEach(data, function (val, key) {
                 this.push([key, val]);
                 total += (val * 100);
             }, data = []);
@@ -321,7 +312,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                     align: 'center',
                     verticalAlign: 'middle',
                     layout: 'vertical',
-                    labelFormatter: function() {
+                    labelFormatter: function () {
                         var a = (Math.round(this.percentage * 10) / 10) + '% ' + this.name,
                             b = (Math.round((this.y || 0) * 100) / 100) + 'kWh';
                         return [
@@ -344,22 +335,22 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     };
 
     //能效比曲线
-    self.energyeffectiverate = function(viewDate) {
+    self.energyeffectiverate = function (viewDate) {
         $api.business.energyeffectiverate({
             time: $filter('date')(viewDate, 'yyyyMM'),
             project: EMAPP.Project.ids,
             assemble: self.groupmode
-        }, function(data) {
+        }, function (data) {
 
             var categories = [],
                 series = [];
 
-            angular.forEach(data.result || {}, function(items, name, bool) {
+            angular.forEach(data.result || {}, function (items, name, bool) {
                 if (Object.keys(items).length > categories.length) {
                     bool = 0;
                     categories = [];
                 }
-                angular.forEach(items, function(item, key) {
+                angular.forEach(items, function (item, key) {
                     this.push(Math.round(item.value * 100) / 100);
                     bool === 0 && categories.push(key * 1000);
                 }, items = []);
@@ -381,7 +372,7 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
                     type: 'datetime',
                     categories: categories,
                     labels: {
-                        formatter: function() {
+                        formatter: function () {
                             return $filter('date')(this.value, 'M-dd');
                         }
                     }
@@ -400,13 +391,13 @@ angular.module('EMAPP').controller('project.main', ["$api", "$filter", "$timeout
     };
 
     //节能星级
-    self.projectdetail = function(viewDate) {
+    self.projectdetail = function (viewDate) {
         $api.business.projectdetail({
             time: $filter('date')(viewDate, 'yyyyMM'),
             project: EMAPP.Project.ids
-        }, function(data) {
+        }, function (data) {
 
-            angular.forEach(data.result, function(item) {
+            angular.forEach(data.result, function (item) {
                 item.data = [0, 0, 0, 0, 0];
                 item.data[item.ecslevel - 1] = item.uaec;
                 this.push({

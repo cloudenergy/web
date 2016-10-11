@@ -1,6 +1,4 @@
-EMAPP.templateCache.put('assets/html/project/statistic.html?rev=74ee267abe', '<div class="app-view-project-statistic"><ul class="nav nav-tabs ng-cloak"><li ng-repeat="(key,name) in self.tabs" ng-class="{active:self.tabActive===key}"><a ui-sref="{tab:key}" ng-bind="name"></a></li><li class="pull-right form-inline"><div class="form-group form-group-sm has-feedback date"><input type="text" class="form-control" ng-model="self.startDate" datetimepicker="{rangeDay:self.rangeDay,maxRangeTo:\'#end_date\'}" id="start_date"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-show="self.tabActive!==\'dailyreport\'">至</div><div class="form-group form-group-sm has-feedback date" ng-show="self.tabActive!==\'dailyreport\'"><input type="text" class="form-control" ng-model="self.endDate" datetimepicker="{rangeDay:self.rangeDay,minRangeTo:\'#start_date\',useCurrent:false}" id="end_date"> <i class="emweb web-calendar form-control-feedback"></i></div><div class="input-group" ng-if="!self.groupmode"><div class="btn-group btn-group-sm"><button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span ng-bind="self.energyData.selected.title||\'全部\'">全部</span> <span class="caret"></span></button><ul class="dropdown-menu"><li ng-class="{active:!self.energyData.selected}" ng-click="self.energyData.selected=null;"><a href="javascript:void(0)">全部</a></li><li ng-repeat="item in self.energyData" ng-class="{active:self.energyData.selected.id===item.id}" ng-click="self.energyData.selected=item;"><a href="javascript:void(0)" ng-bind="item.title"></a></li></ul></div></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-success" ng-click="self.report(self.tabActive);"><i class="emweb web-search"></i> 查询</button></div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group-sm">&nbsp;</div><div class="input-group btn-group btn-group-sm ng-hide" ng-show="self.tabActive===\'monthlyreport\'||self.tabActive===\'dailyreport\'"><a class="btn btn-info" href="javascript:void(0)" ng-class="{active:self.grid_timetype_current===\'usage\'}" ng-click="self.grid_timetype(\'usage\')">用量 <i class="emweb web-curve-area"></i> </a><a class="btn btn-info" href="javascript:void(0)" ng-class="{active:self.grid_timetype_current===\'scale\'}" ng-click="self.grid_timetype(\'scale\')">刻度 <i class="emweb web-line-spacing"></i></a></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.filter()">筛选<i class="emweb web-filter"></i></button></div><div class="input-group btn-group-sm"><button type="button" class="btn btn-info" ng-click="self.export()">导出<i class="emweb web-export-excel"></i></button></div></li></ul><div class="tab-content ng-cloak"><div class="tab-pane subContent active" auto-height ui-i18n="\'zh-cn\'" id="report"><div ui-grid="self.gridOptions" class="grid" ui-grid-auto-resize ui-grid-exporter ui-grid-move-columns ui-grid-resize-columns></div></div></div></div>');
-
-angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$timeout", "$stateParams", "uiGridConstants", function($api, $filter, $timeout, $stateParams, uiGridConstants) {
+angular.module('EMAPP').controller('project.statistic', ["$templateCache", "$api", "$filter", "$timeout", "$stateParams", "uiGridConstants", function ($templateCache, $api, $filter, $timeout, $stateParams, uiGridConstants) {
 
     var self = this,
         nowDate = new Date(),
@@ -10,18 +8,18 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
 
     !self.groupmode && $api.energy.info({
         project: EMAPP.Project.ids
-    }, function(data) {
-        angular.forEach(data.result.energy || {}, function(item) {
+    }, function (data) {
+        angular.forEach(data.result.energy || {}, function (item) {
             this.push(item)
         }, self.energyData = [])
     });
 
-    self.filter = function() {
+    self.filter = function () {
         self.gridOptions.enableFiltering = !self.gridOptions.enableFiltering;
         self.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
     };
 
-    self.export = function() {
+    self.export = function () {
 
         switch (self.tabActive) {
             case 'settlereport':
@@ -38,12 +36,12 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
 
     };
 
-    (self.grid_timetype = function(key) {
+    (self.grid_timetype = function (key) {
         self.grid_timetype_current = key;
         self.rebuildData && self.rebuildData(self.gridOptions.data);
     })('usage');
 
-    self.rebuildData = function(data) {
+    self.rebuildData = function (data) {
         // if (self.tabActive === 'settlereport') {
         //     angular.forEach(data, function(item) {
         //         item.min = (Math.round(item.min * 100) / 100);
@@ -52,17 +50,17 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
         //     })
         // }
         if (self.tabActive === 'monthlyreport') {
-            angular.forEach(data, function(item) {
+            angular.forEach(data, function (item) {
                 item.monthlySum = (Math.round(item.monthlySum * 100) / 100);
-                angular.forEach(item[self.grid_timetype_current], function(val, key) {
+                angular.forEach(item[self.grid_timetype_current], function (val, key) {
                     item['day' + $filter('date')(key, 'yyyyMMdd')] = val;
                 })
             })
         }
         if (self.tabActive === 'dailyreport') {
-            angular.forEach(data, function(item) {
+            angular.forEach(data, function (item) {
                 item.dailysum = (Math.round(item.dailysum * 100) / 100);
-                angular.forEach(item[self.grid_timetype_current], function(val, key) {
+                angular.forEach(item[self.grid_timetype_current], function (val, key) {
                     item['hour' + $filter('date')(key, 'H')] = val;
                 })
             })
@@ -71,13 +69,13 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
     };
 
     self.gridOptions = {
-        onRegisterApi: function(gridApi) {
+        onRegisterApi: function (gridApi) {
             self.gridApi = gridApi;
         },
         rowHeight: 34,
         enableColumnResizing: true,
         exporterOlderExcelCompatibility: true,
-        exporterHeaderFilter: function(displayName) {
+        exporterHeaderFilter: function (displayName) {
             if (displayName === '能耗总值') {
                 return displayName + '(合计：' + self.statistic.sum + ')';
             }
@@ -86,7 +84,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
             }
             return displayName;
         },
-        exporterFieldCallback: function(grid, row, col, value) {
+        exporterFieldCallback: function (grid, row, col, value) {
             return {
                 name: true,
                 'id.substr(12,12)': true,
@@ -103,7 +101,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
         dailyreport: '日报表'
     };
 
-    self.tabClick = function(tabKey) {
+    self.tabClick = function (tabKey) {
 
         self.startDate = $filter('date')(nowDate, tabKey === 'dailyreport' ? 'yyyy-MM-dd' : 'yyyy-MM-01');
         self.endDate = $filter('date')(nowDate, 'yyyy-MM-dd');
@@ -119,15 +117,15 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
 
     };
 
-    self.report = function(tabKey) {
+    self.report = function (tabKey) {
 
         var energy = self.energyData && self.energyData.selected && self.energyData.selected.id,
-            headerCellTemplate = EMAPP.templateCache.get('ui-grid/uiGridHeaderCell'),
+            headerCellTemplate = $templateCache.get('ui-grid/uiGridHeaderCell'),
             data = {
                 project: []
             };
 
-        angular.forEach(EMAPP.Project, function(item) {
+        angular.forEach(EMAPP.Project, function (item) {
             data.project.push({
                 id: item._id,
                 energy: energy || undefined
@@ -189,7 +187,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     minWidth: 130,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right',
-                    headerCellTemplate: function() {
+                    headerCellTemplate: function () {
                         return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.sum}}</div></div><div role="button" tabindex="0"');
                     }
                 }, {
@@ -208,7 +206,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     minWidth: 130,
                     headerCellClass: 'text-right',
                     cellClass: 'text-right',
-                    headerCellTemplate: function() {
+                    headerCellTemplate: function () {
                         return headerCellTemplate.replace('</sub></span></div><div role="button" tabindex="0"', '</sub></span><div class="text-info">合计：{{grid.appScope.self.statistic.cost}}</div></div><div role="button" tabindex="0"');
                     }
                 }];
@@ -331,7 +329,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                 break;
         }
 
-        $api.business[tabKey](data, function(data) {
+        $api.business[tabKey](data, function (data) {
             switch (tabKey) {
                 case 'settlereport':
                     data = data.result[projectId] || {};
@@ -364,7 +362,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                 case 'monthlyreport':
                     data = data.result[projectId] || [];
                     if (data.length) {
-                        angular.forEach(data[0].usage, function(val, key) {
+                        angular.forEach(data[0].usage, function (val, key) {
                             this.push({
                                 displayName: $filter('date')(key, 'M-d'),
                                 name: 'day' + $filter('date')(key, 'yyyyMMdd'),
@@ -402,7 +400,7 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                 case 'dailyreport':
                     data = data.result[projectId] || [];
                     if (data.length) {
-                        angular.forEach(data[0].usage, function(val, key) {
+                        angular.forEach(data[0].usage, function (val, key) {
                             key = $filter('date')(key, 'H');
                             this.push({
                                 displayName: key + '时',
@@ -439,8 +437,8 @@ angular.module('EMAPP').controller('project.statistic', ["$api", "$filter", "$ti
                     });
                     break;
                 case 'projectreport':
-                    angular.forEach(data.result, function(items) {
-                        angular.forEach(items, function(val, key) {
+                    angular.forEach(data.result, function (items) {
+                        angular.forEach(items, function (val, key) {
                             items[key] = key === 'name' ? val : (Math.round(val * 100) / 100)
                         });
                         this.push(items);

@@ -11,8 +11,9 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
             deps: ["$ocLazyLoad", function ($ocLazyLoad) {
                 document.title = '用户登录';
                 return $ocLazyLoad.load([
+                    static + 'libs/angular-cookies-1.5.8/angular-cookies.min.js',
                     static + 'libs/angular-md5-0.1.10/angular-md5.min.js',
-                    'assets/js/controllers/login.min.js?rev=2f99f59663'
+                    'assets/js/controllers/login.min.js?rev=246c3479b0'
                 ]);
             }]
         }
@@ -28,10 +29,45 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/dashboard.min.css?rev=b1c237a8e3',
                     static + 'libs/angular-sanitize-1.5.8/angular-sanitize.min.js',
-                    'assets/js/controllers/dashboard.min.js?rev=e0a966dac5',
+                    'assets/js/controllers/dashboard.min.js?rev=83fe7e3414',
+                    'assets/js/services/menu.min.js?rev=d8399f3de8',
+                    'assets/js/services/project.min.js?rev=9d5d2754f4',
                     'assets/js/directives/auto-height.min.js?rev=b4be32fd66',
                     'assets/js/directives/perfect-scrollbar.min.js?rev=13e10e101e'
                 ]);
+            }],
+            services: ["$rootScope", "$q", "$state", "deps", "SweetAlert", "MENUCONFIG", "Project", function ($rootScope, $q, $state, deps, SweetAlert, MENUCONFIG, Project) {
+
+                var deferred = $q.defer();
+
+                angular.forEach(MENUCONFIG, function (item) {
+                    if (EMAPP.User.groupmode) {
+                        item.groupmode && this.push(item);
+                    } else {
+                        this.push(item);
+                    }
+                }, $rootScope.menuData = []);
+
+                $state.notfound = true;
+                angular.forEach($rootScope.menuData, function (item) {
+                    if ($state.prev.state && ~$state.prev.state.indexOf(item.state)) {
+                        delete $state.notfound;
+                    }
+                });
+
+                if ($state.notfound) {
+                    delete $state.notfound;
+                    deferred.reject();
+                    $state.transitionTo('dashboard.main', $state.prev.params);
+                } else {
+                    Project().then(deferred.resolve, function () {
+                        deferred.reject();
+                        SweetAlert.warning('没有可用项目');
+                    });
+                }
+
+                return deferred.promise;
+
             }]
         }
     }).state('dashboard.main', {
@@ -44,7 +80,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/main.min.css?rev=03987690d7',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/main.min.js?rev=aa2eb44794',
+                    'assets/js/controllers/project/main.min.js?rev=aef9797e1e',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a'
                 ]);
@@ -62,7 +98,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/monitor.min.js?rev=32b0bd3456',
+                    'assets/js/controllers/project/monitor.min.js?rev=2a3cd9c3f4',
                     'assets/js/directives/project/monitor.min.js?rev=672ec59014',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
@@ -83,8 +119,8 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/control.min.css?rev=6f54248211',
                     static + 'libs/jshashes-1.0.5/hashes.min.js',
-                    'assets/js/controllers/project/control.min.js?rev=9f6dc362d2',
-                    'assets/js/directives/project/control.min.js?rev=678eaa7ce9',
+                    'assets/js/controllers/project/control.min.js?rev=e1788b91a5',
+                    'assets/js/directives/project/control.min.js?rev=f16fce996e',
                     'assets/js/directives/jstree.min.js?rev=47846372b7',
                     'assets/js/directives/flatui-switch.min.js?rev=b153aafd1f',
                     'assets/js/directives/customer.min.js?rev=ab552a2840'
@@ -102,7 +138,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                 return $ocLazyLoad.load([
                     'assets/css/project/analyze.min.css?rev=84d5ca7ea3',
                     static + 'libs/highcharts-4.2.5/highcharts.js',
-                    'assets/js/controllers/project/analyze.min.js?rev=a08fb04069',
+                    'assets/js/controllers/project/analyze.min.js?rev=d14c5a2249',
                     'assets/js/directives/project/analyze.min.js?rev=22a74f73f7',
                     'assets/js/directives/highcharts.min.js?rev=b80f880c1a',
                     'assets/js/factories/project/analyze.min.js?rev=fcbf668590'
@@ -120,7 +156,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/statistic.min.js?rev=6e2a2964aa',
+                    'assets/js/controllers/project/statistic.min.js?rev=ff5c870140',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e'
                 ]);
             }]
@@ -134,7 +170,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
                     'assets/css/project/statistic.min.css?rev=8f0bb83eec',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.css',
                     static + 'libs/angular-ui-grid-3.2.1/ui-grid.min.js',
-                    'assets/js/controllers/project/financial.min.js?rev=e255b2038b',
+                    'assets/js/controllers/project/financial.min.js?rev=0aa99f34ac',
                     'assets/js/directives/project/financial.min.js?rev=613580cbd1',
                     'assets/js/directives/datetimepicker.min.js?rev=cb7d06c81e',
                     'assets/js/factories/uuid.min.js?rev=cb2874826a'
@@ -151,12 +187,7 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
         $location.otherwise = true;
     });
 
-}]).run(["$rootScope", "$cookies", "$q", "$location", "$state", "MENUCONFIG", "User", "Project", function ($rootScope, $cookies, $q, $location, $state, MENUCONFIG, User, Project) {
-
-    // get cookies
-    angular.forEach($cookies.getAll(), function (value, key) {
-        this[key] = value;
-    }, EMAPP.User = {});
+}]).run(["$rootScope", "$location", "$state", "User", function ($rootScope, $location, $state, User) {
 
     //remember prev state
     $state.prev = {};
@@ -170,54 +201,25 @@ angular.module('EMAPP').config(["$locationProvider", "$urlRouterProvider", "$sta
     });
 
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-        if (toParams.projectid && !sessionStorage.projectid) {
+        if (toParams.projectid) {
             sessionStorage.projectid = toParams.projectid;
             delete toParams.projectid;
         }
         if (toState.name === 'auth') {
             delete sessionStorage.projectid;
             delete EMAPP.Project;
-            EMAPP.User = {};
+            delete EMAPP.User;
         } else {
             $state.prev.state = toState.name;
             $state.prev.params = toParams;
-            if (EMAPP.User.token) {
-                if (!EMAPP.Project) {
-                    event.preventDefault();
-                    $q.all([angular.isDefined(EMAPP.User.groupmode) || User(), Project()]).then(function () {
-
-                        angular.forEach(MENUCONFIG, function (item) {
-                            if (EMAPP.User.groupmode) {
-                                item.groupmode && this.push(item);
-                            } else {
-                                this.push(item);
-                            }
-                        }, $rootScope.menuData = []);
-
-                        $state.notfound = true;
-                        angular.forEach($rootScope.menuData, function (item) {
-                            if ($state.prev.state && ~$state.prev.state.indexOf(item.state)) {
-                                delete $state.notfound;
-                            }
-                        });
-
-                        if ($state.notfound) {
-                            delete $state.notfound;
-                            $state.go('dashboard.main', $state.prev.params);
-                        } else {
-                            $state.go($state.prev.state || 'dashboard.main', $state.prev.params);
-                        }
-
-                    }, function () {
-                        $state.go('auth', {
-                            action: 'login'
-                        });
-                    });
-                }
-            } else {
+            if (!EMAPP.User) {
                 event.preventDefault();
-                $state.go('auth', {
-                    action: 'login'
+                User().then(function () {
+                    $state.transitionTo($state.prev.state, $state.prev.params);
+                }, function () {
+                    $state.go('auth', {
+                        action: 'login'
+                    });
                 });
             }
         }

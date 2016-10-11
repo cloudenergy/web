@@ -98,7 +98,7 @@ angular.module('EMAPP').constant('APICONFIG', {
     }]
 }).config(["$httpProvider", function ($httpProvider) {
     /*  register the interceptor via an anonymous factory  */
-    $httpProvider.interceptors.push(["$rootScope", "$q", "$location", "SweetAlert", function ($rootScope, $q, $location, SweetAlert) {
+    $httpProvider.interceptors.push(["$rootScope", "$q", "$location", function ($rootScope, $q, $location) {
 
         $rootScope._request_count = 0;
 
@@ -107,8 +107,6 @@ angular.module('EMAPP').constant('APICONFIG', {
             if (result.data) {
                 if (result.data.code === 90000005) {
                     $location.url('/dashboard/auth/logout').replace();
-                } else {
-                    result.data.message && SweetAlert[result.status === 200 ? 'success' : 'error'](result.data.message);
                 }
             }
             return result.status === 200 ? result : $q.reject(result);

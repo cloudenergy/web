@@ -146,7 +146,7 @@ angular.module('EMAPP').directive('controlSpeed', ["$api", function ($api) {
     };
 }]);
 
-angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAlert", function ($api, $timeout, SweetAlert) {
+angular.module('EMAPP').directive('controlSwitch', ["$q", "$api", "$timeout", "SweetAlert", function ($q, $api, $timeout, SweetAlert) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs, ctrl) {
@@ -160,60 +160,47 @@ angular.module('EMAPP').directive('controlSwitch', ["$api", "$timeout", "SweetAl
                             .bootstrapSwitch('state', enable)
                             .on('switchChange.bootstrapSwitch', function (event, state) {
                                 $timeout(function () {
-                                    if (attrs.command === 'EMC_SWITCH') {
+                                    //EMC_VALVE
+                                    if (/^(EMC_SWITCH)$/.test(attrs.command)) {
                                         bool && SweetAlert.swal({
                                             title: '控制校验',
-                                            text: '',
-                                            type: 'input',
+                                            input: 'password',
+                                            cancelButtonText: '取消',
+                                            confirmButtonText: '确定',
                                             inputPlaceholder: '控制密码',
-                                            animation: 'slide-from-top',
-                                            closeOnConfirm: false,
                                             showCancelButton: true,
                                             showLoaderOnConfirm: true,
-                                            cancelButtonText: '取消',
-                                            confirmButtonText: '确定'
-                                        }, function (inputValue) {
-
-                                            if (inputValue === false) {
-                                                bool = false;
-                                                element.bootstrapSwitch('toggleState');
-                                                $timeout(function () {
-                                                    bool = true;
-                                                });
-                                                return false;
-                                            }
-
-                                            if (inputValue === '') {
-                                                SweetAlert.swal.showInputError('请输入控制密码');
-                                                return false;
-                                            }
-
-                                            $api.control.send({
-                                                id: attrs.sensorid,
-                                                command: attrs.command,
-                                                param: {
-                                                    mode: state ? attrs.onValue : attrs.offValue
-                                                },
-                                                ctrlcode: (new Hashes.SHA1).hex(inputValue).toUpperCase()
-                                            }, function (data) {
-                                                if (data.code === 0) {
-                                                    SweetAlert.success('操作成功！');
-                                                } else {
-                                                    SweetAlert.swal({
-                                                        title: '控制密码校验失败！',
-                                                        text: '',
-                                                        type: 'error',
-                                                        confirmButtonText: '关闭'
-                                                    }, function () {
-                                                        bool = false;
-                                                        element.bootstrapSwitch('toggleState');
-                                                        $timeout(function () {
-                                                            bool = true;
-                                                        });
+                                            allowOutsideClick: false,
+                                            preConfirm: function (value) {
+                                                var deferred = $q.defer();
+                                                if (value) {
+                                                    $api.control.send({
+                                                        id: attrs.sensorid,
+                                                        command: attrs.command,
+                                                        param: {
+                                                            mode: state ? attrs.onValue : attrs.offValue
+                                                        },
+                                                        ctrlcode: (new Hashes.SHA1).hex(value).toUpperCase()
+                                                    }, function (data) {
+                                                        if (data.code) {
+                                                            deferred.reject('密码校验未通过');
+                                                        } else {
+                                                            deferred.resolve(data);
+                                                        }
                                                     });
+                                                } else {
+                                                    deferred.reject('请输入控制密码');
                                                 }
+                                                return deferred.promise;
+                                            }
+                                        }).then(function (value) {
+                                            SweetAlert.close();
+                                        }, function (dismiss) {
+                                            bool = false;
+                                            element.bootstrapSwitch('toggleState');
+                                            $timeout(function () {
+                                                bool = true;
                                             });
-
                                         });
                                     } else {
                                         $api.control.send({

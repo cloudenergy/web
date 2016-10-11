@@ -93,18 +93,6 @@ body {
   .login-form .form-control-feedback {
     pointer-events: auto; }
 
-/*  sweetalert插件  */
-.sweet-alert {
-  margin-left: -240px; }
-  .sweet-alert .sa-input-error {
-    top: 22px;
-    right: 20px;
-    cursor: pointer; }
-  .sweet-alert .sa-input-error::after,
-  .sweet-alert .sa-input-error::before {
-    margin-left: -10px;
-    margin-top: -3px; }
-
 /*  iconfont  */
 .btn .emweb {
   font-size: 100%; }

@@ -1,4 +1,4 @@
-angular.module('EMAPP').factory('Project', ["$q", "$api", "$state", "SweetAlert", function ($q, $api, $state, SweetAlert) {
+angular.module('EMAPP').factory('Project', ["$q", "$api", function ($q, $api) {
     return function () {
         var deferred = $q.defer();
         $api.project.info({
@@ -7,7 +7,7 @@ angular.module('EMAPP').factory('Project', ["$q", "$api", "$state", "SweetAlert"
 
             data.result = angular.isArray(data.result) && data.result || data.result && [data.result] || [];
 
-            angular.forEach(EMAPP.Project = self.projectData = data.result, function (item) {
+            angular.forEach(EMAPP.Project = data.result, function (item) {
                 this.push(item._id);
                 EMAPP.Project[item._id] = item;
             }, EMAPP.Project.ids = []);
@@ -15,10 +15,11 @@ angular.module('EMAPP').factory('Project', ["$q", "$api", "$state", "SweetAlert"
             if (EMAPP.Project.length) {
                 deferred.resolve();
             } else {
-                SweetAlert.warning('没有可用项目');
                 deferred.reject();
             }
 
+        }, function () {
+            deferred.reject();
         });
         return deferred.promise;
     };
